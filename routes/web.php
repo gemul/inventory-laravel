@@ -80,7 +80,7 @@ Route::group(['middleware' => 'auth'], function () {
         /**
          * Admin Access
          */
-        Route::group(['middleware' => 'admin'], function () {
+        Route::group(['middleware' => 'akses:admin'], function () {
             /**
              * Admin Index
              * // Route named "admin::index"
@@ -92,6 +92,9 @@ Route::group(['middleware' => 'auth'], function () {
              * // Routes name "admin.users.*"
              */
             Route::resource('users', 'UsersController');
+
+            Route::resource('kategori', 'KategoriController');
+            Route::resource('barang', 'BarangController');
         });
     });
 

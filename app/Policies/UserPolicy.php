@@ -9,6 +9,9 @@ class UserPolicy
 {
     use HandlesAuthorization;
 
+    public function forceFail(){
+        return false;
+    }
     /**
      * @param User $user
      * @param $ability

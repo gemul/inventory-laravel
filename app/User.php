@@ -12,14 +12,18 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use Notifiable, FillableFields, OrderableTrait, SearchLikeTrait, Impersonator;
-
+    
+    const CREATED_AT = 'created';
+    const UPDATED_AT = 'updated';
+    protected $table = 'user';
+    protected $primaryKey = 'iduser';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'is_admin', 'logo_number'
+        'nama', 'username', 'password', 
     ];
 
     /**
@@ -30,13 +34,13 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-
     /**
      * @return boolean
      */
     public function isAdmin()
     {
-        return (int) $this->is_admin === 1;
+        return true;
+       // return (int) $this->is_admin === 1;
     }
 
     /**
@@ -53,5 +57,10 @@ class User extends Authenticatable
     public function getRecordTitle()
     {
         return $this->name;
+    }
+
+    public function hakAkses($hak)
+    {
+        return in_array($hak,json_decode($this->hak));
     }
 }

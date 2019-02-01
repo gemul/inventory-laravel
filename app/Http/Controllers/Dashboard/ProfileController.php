@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Utils;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -29,17 +30,16 @@ class ProfileController extends Controller
     public function updateProfile(Request $request)
     {
         $user = Auth::user();
+        // $muser=new Users();
         $this->validate($request, [
-            'name' => 'required|min:3|max:255',
-            'email' => 'required|email|max:255|unique:users,email,'.$user->id,
+            'nama' => 'required|min:3|max:255',
+            'username' => 'required|max:255|unique:user,username,'.$user->iduser.',iduser',
             'password' => 'nullable|confirmed|min:6',
-            'logo_number' => 'required|in:' . implode(',', Utils::getLogosNumber()),
         ]);
 
         $updateValues = [
-            'name' => $request->input('name', $user->name),
-            'email' => $request->input('email', $user->email),
-            'logo_number' => Utils::getValidLogoNumber($request->input('logo_number', $user->logo_number)),
+            'nama' => $request->input('nama', $user->nama),
+            'username' => $request->input('username', $user->username),
         ];
         $password = $request->input('password', null);
         if (!empty($password)) {

@@ -7,13 +7,13 @@ $_pageSubtitle = (isset($addVarsForView['_pageSubtitle']) && !empty($addVarsForV
 $_formFiles = isset($addVarsForView['formFiles']) ? $addVarsForView['formFiles'] : false;
 $_listLink = route($resourceRoutesAlias.'.index');
 $_createLink = route($resourceRoutesAlias.'.create');
-$_updateLink = route($resourceRoutesAlias.'.update', $record->id);
+$_updateLink = route($resourceRoutesAlias.'.update', $record->$primaryKey);
 $_printLink = false;
 ?>
 
 {{-- Breadcrumbs --}}
 @section('breadcrumbs')
-    {!! Breadcrumbs::render($resourceRoutesAlias.'.edit', $record->id) !!}
+    {!! Breadcrumbs::render($resourceRoutesAlias.'.edit', $record->$primaryKey) !!}
 @endsection
 
 {{-- Page Title --}}

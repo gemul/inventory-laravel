@@ -13,4 +13,26 @@
             </a>
         </li>
     @endif
+    <li class="active treeview menu-open">
+        <a href="#">
+        <i class="fa fa-book"></i> <span>Master</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li class="{{ \App\Utils::checkRoute(['admin::kategori']) ? 'active': '' }}">
+                <a href="{{ route('admin::kategori.index') }}">
+                    <span>Kategori</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="treeview-menu">
+            <li class="{{ \App\Utils::checkRoute(['admin::barang']) ? 'active': '' }}">
+                <a href="{{ route('admin::barang.index') }}">
+                    <span>Barang</span>
+                </a>
+            </li>
+        </ul>
+    </li>
 </ul>

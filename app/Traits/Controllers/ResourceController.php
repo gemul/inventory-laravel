@@ -3,6 +3,7 @@
 namespace App\Traits\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 trait ResourceController
 {
@@ -16,8 +17,10 @@ trait ResourceController
      */
     public function index(Request $request)
     {
-        $this->authorize('viewList', $this->getResourceModel());
-
+        //$this->authorize('viewList', $this->getResourceModel());
+        if(!Auth::user()->hakAkses($this->hakAkses['index'])){
+            $this->authorize('forceFail');
+        }
         $paginatorData = [];
         $perPage = (int) $request->input('per_page', '');
         $perPage = (is_numeric($perPage) && $perPage > 0 && $perPage <= 100) ? $perPage : 15;
@@ -31,7 +34,12 @@ trait ResourceController
         $records = $this->getSearchRecords($request, $perPage, $search);
         $records->appends($paginatorData);
 
+        $pkey='id';
+        if(isset($this->primaryKey)){
+            $pkey=$this->primaryKey;
+        }
         return view($this->filterIndexView('_resources.index'), $this->filterSearchViewData($request, [
+            'primaryKey' => $pkey,
             'records' => $records,
             'search' => $search,
             'resourceAlias' => $this->getResourceAlias(),
@@ -48,8 +56,9 @@ trait ResourceController
      */
     public function create()
     {
-        $this->authorize('create', $this->getResourceModel());
-
+        if(!Auth::user()->hakAkses($this->hakAkses['add'])){
+            $this->authorize('forceFail');
+        }
         $class = $this->getResourceModel();
         return view($this->filterCreateView('_resources.create'), $this->filterCreateViewData([
             'record' => new $class(),
@@ -69,7 +78,9 @@ trait ResourceController
      */
     public function store(Request $request)
     {
-        $this->authorize('create', $this->getResourceModel());
+        if(!Auth::user()->hakAkses($this->hakAkses['add'])){
+            $this->authorize('forceFail');
+        }
 
         $valuesToSave = $this->getValuesToSave($request);
         $request->merge($valuesToSave);
@@ -108,9 +119,15 @@ trait ResourceController
     {
         $record = $this->getResourceModel()::findOrFail($id);
 
-        $this->authorize('update', $record);
-
+        if(!Auth::user()->hakAkses($this->hakAkses['edit'])){
+            $this->authorize('forceFail');
+        }
+        $pkey='id';
+        if(isset($this->primaryKey)){
+            $pkey=$this->primaryKey;
+        }
         return view($this->filterEditView('_resources.edit'), $this->filterEditViewData($record, [
+            'primaryKey' => $pkey,
             'record' => $record,
             'resourceAlias' => $this->getResourceAlias(),
             'resourceRoutesAlias' => $this->getResourceRoutesAlias(),
@@ -131,7 +148,9 @@ trait ResourceController
     {
         $record = $this->getResourceModel()::findOrFail($id);
 
-        $this->authorize('update', $record);
+        if(!Auth::user()->hakAkses($this->hakAkses['edit'])){
+            $this->authorize('forceFail');
+        }
 
         $valuesToSave = $this->getValuesToSave($request, $record);
         $request->merge($valuesToSave);
@@ -159,7 +178,9 @@ trait ResourceController
     {
         $record = $this->getResourceModel()::findOrFail($id);
 
-        $this->authorize('delete', $record);
+        if(!Auth::user()->hakAkses($this->hakAkses['delete'])){
+            $this->authorize('forceFail');
+        }
 
         if (! $this->checkDestroy($record)) {
             return redirect(route($this->getResourceRoutesAlias().'.index'));

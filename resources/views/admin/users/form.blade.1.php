@@ -16,12 +16,12 @@
 
     <div class="col-md-12">
         <div class="form-group margin-b-5 margin-t-5{{ $errors->has('username') ? ' has-error' : '' }}">
-            <label for="username">Username</label>
-            <input type="email" class="form-control" name="username" placeholder="Username" value="{{ old('username', $record->username) }}" required>
+            <label for="username">Username *</label>
+            <input type="email" class="form-control" name="email" placeholder="Email" value="{{ old('email', $record->email) }}" required>
 
-            @if ($errors->has('username'))
+            @if ($errors->has('email'))
                 <span class="help-block">
-                    <strong>{{ $errors->first('username') }}</strong>
+                    <strong>{{ $errors->first('email') }}</strong>
                 </span>
             @endif
         </div>

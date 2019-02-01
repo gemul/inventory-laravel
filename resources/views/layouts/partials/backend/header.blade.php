@@ -31,18 +31,17 @@
                 <!-- User Account -->
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="{{ Auth::user()->getLogoPath() }}" class="user-image"
-                             alt="{{ Auth::user()->name }}">
-                        <span class="hidden-xs">{{ Auth::user()->name }}</span>
+                        <span class='fa fa-user'></span>
+                        <span class="hidden-xs">{{ Auth::user()->nama }}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="{{ Auth::user()->getLogoPath() }}" class="img-circle"
-                                 alt="{{ Auth::user()->name }}">
+                            <img src="{{ App::make('url')->to('/') }}/img/iykwim.jpg" class="img-circle"
+                                 alt="{{ Auth::user()->nama }}">
 
                             <p>
-                                {{ Auth::user()->name }}
+                                {{ Auth::user()->nama }}
                                 <small>Member since {{ Carbon::parse(Auth::user()->created_at)->toFormattedDateString() }}</small>
                             </p>
                         </li>

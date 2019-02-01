@@ -30,7 +30,7 @@ $_pageSubtitle = '';
             <!-- Profile Image -->
             <div class="box box-primary">
                 <div class="box-body box-profile">
-                    <img class="profile-user-img img-responsive img-circle" src="{{ Auth::user()->getLogoPath() }}" alt="User profile picture">
+                    <img class="profile-user-img img-responsive img-circle" src="{{ App::make('url')->to('/') }}/img/iykwim.jpg" alt="User profile picture">
 
                     <h3 class="profile-username text-center">{{ Auth::user()->name }}</h3>
 
@@ -52,27 +52,27 @@ $_pageSubtitle = '';
                         <form class="form-horizontal" role="form" method="POST" action="{{ route('dashboard::profile.update') }}">
                             {!! csrf_field() !!}
 
-                            <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                                <label for="inputName" class="col-sm-2 control-label">Name</label>
+                            <div class="form-group{{ $errors->has('nama') ? ' has-error' : '' }}">
+                                <label for="inputNama" class="col-sm-2 control-label">Nama</label>
 
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="inputName" placeholder="Name" value="{{ old('name', Auth::user()->name) }}" name="name">
+                                    <input type="text" class="form-control" id="inputNama" placeholder="Nama" value="{{ old('nama', Auth::user()->nama) }}" name="nama">
 
-                                    @if ($errors->has('name'))
+                                    @if ($errors->has('nama'))
                                         <span class="help-block">
-                                            <strong>{{ $errors->first('name') }}</strong>
+                                            <strong>{{ $errors->first('nama') }}</strong>
                                         </span>
                                     @endif
                                 </div>
                             </div>
-                            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+                            <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
+                                <label for="inputusername" class="col-sm-2 control-label">Username</label>
                                 <div class="col-sm-10">
-                                    <input type="email" class="form-control" id="inputEmail" placeholder="Email" value="{{ old('email', Auth::user()->email) }}" name="email">
+                                    <input type="text" class="form-control" id="inputusername" placeholder="username" value="{{ old('username', Auth::user()->username) }}" name="username">
                                 </div>
-                                @if ($errors->has('email'))
+                                @if ($errors->has('username'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong>{{ $errors->first('username') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -104,25 +104,6 @@ $_pageSubtitle = '';
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="logo_number" class="col-sm-2 control-label">Logo</label>
-                                <div class="col-sm-10">
-                                    <div class="box box-info">
-                                        <div class="box-body no-padding">
-                                            <ul class="logo-number users-list clearfix">
-                                            @foreach (\App\Utils::getLogosNumber() as $logoNumber)
-                                                <li>
-                                                    <img class="profile-user-img img-responsive img-circle" src="{{ \App\Utils::logoPath($logoNumber) }}" alt="Profile picture {{ $logoNumber }}">
-                                                    <span class="users-list-date">
-                                                        <input type="radio" name="logo_number" value="{{ $logoNumber }}" {{ old('logo_number', Auth::user()->logo_number) == $logoNumber ? 'checked' : '' }}>
-                                                    </span>
-                                                </li>
-                                            @endforeach
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">

@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use App\User;
+use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
 {
@@ -19,7 +22,11 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
-
+    //use username
+    public function username()
+    {
+        return 'username';
+    }
     /**
      * Where to redirect users after login.
      *
@@ -35,5 +42,13 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+    
+    protected function attemptLogin(Request $request)
+    {
+        Log::info('attemp login called');
+        return $this->guard()->attempt(
+            $this->credentials($request), $request->filled('remember')
+        );
     }
 }
