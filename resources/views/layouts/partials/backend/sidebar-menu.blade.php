@@ -35,4 +35,26 @@
             </li>
         </ul>
     </li>
+    <li class="active treeview menu-open">
+        <a href="#">
+        <i class="fa fa-book"></i> <span>Transaksi</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li class="{{ \App\Utils::checkRoute(['transaksi::barang']) ? 'active': '' }}">
+                <a href="{{ route('transaksi::barang.index') }}">
+                    <span>Barang</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="treeview-menu">
+            <li class="{{ \App\Utils::checkRoute(['transaksi::peminjaman']) ? 'active': '' }}">
+                <a href="{{ route('transaksi::peminjaman.index') }}">
+                    <span>Peminjaman</span>
+                </a>
+            </li>
+        </ul>
+    </li>
 </ul>

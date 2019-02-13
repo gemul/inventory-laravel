@@ -47,6 +47,11 @@ Breadcrumbs::register('admin', function ($breadcrumbs) {
     $breadcrumbs->push('Admin', route('admin::index'));
 });
 
+// Admin
+Breadcrumbs::register('transaksi', function ($breadcrumbs) {
+    $breadcrumbs->push('Transaksi', route('transaksi::index'));
+});
+
 // Admin / {Resource} / {List|Edit|Create}
 $resources = [
     'users' => 'Users',
@@ -61,6 +66,32 @@ foreach ($resources as $resource => $data) {
         $parent = $data['parent'];
     }
     $resource = 'admin::' . $resource;
+
+    // List
+    Breadcrumbs::register($resource, function ($breadcrumbs) use ($resource, $title, $parent) {
+        $breadcrumbs->parent($parent);
+        $breadcrumbs->push($title, route($resource.'.index'));
+    });
+    // Create
+    Breadcrumbs::register($resource.'.create', function ($breadcrumbs) use ($resource) {
+        $breadcrumbs->parent($resource);
+        $breadcrumbs->push('Create', route($resource.'.create'));
+    });
+    // Edit
+    Breadcrumbs::register($resource.'.edit', function ($breadcrumbs, $id) use ($resource) {
+        $breadcrumbs->parent($resource);
+        $breadcrumbs->push('Edit', route($resource.'.edit', $id));
+    });
+}
+
+foreach ($resources as $resource => $data) {
+    $parent = 'transaksi';
+    $title = $data;
+    if (is_array($data)) {
+        $title = $data['title'];
+        $parent = $data['parent'];
+    }
+    $resource = 'transaksi::' . $resource;
 
     // List
     Breadcrumbs::register($resource, function ($breadcrumbs) use ($resource, $title, $parent) {

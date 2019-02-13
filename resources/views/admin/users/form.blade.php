@@ -17,7 +17,7 @@
     <div class="col-md-12">
         <div class="form-group margin-b-5 margin-t-5{{ $errors->has('username') ? ' has-error' : '' }}">
             <label for="username">Username</label>
-            <input type="email" class="form-control" name="username" placeholder="Username" value="{{ old('username', $record->username) }}" required>
+            <input type="text" class="form-control" name="username" placeholder="Username" value="{{ old('username', $record->username) }}" required>
 
             @if ($errors->has('username'))
                 <span class="help-block">

@@ -95,6 +95,20 @@ Route::group(['middleware' => 'auth'], function () {
 
             Route::resource('kategori', 'KategoriController');
             Route::resource('barang', 'BarangController');
+            Route::resource('transaksi_barang', 'TransaksiBarangController');
+            Route::resource('transaksi_peminjaman', 'TransaksiPeminjamanController');
+            
+        });
+    });
+    Route::group(['prefix' => 'transaksi', 'namespace' => 'Transaksi', 'as' => 'transaksi::'], function () {
+        /**
+         * Admin Access
+         */
+        Route::group(['middleware' => 'akses:admin'], function () {
+            Route::get('/', ['as' => 'index', 'uses' => 'IndexController@index']);
+            Route::resource('barang', 'TransaksiBarangController');
+            Route::resource('peminjaman', 'TransaksiPeminjamanController');
+
         });
     });
 
