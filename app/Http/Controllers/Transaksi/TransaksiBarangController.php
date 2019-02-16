@@ -205,4 +205,12 @@ class TransaksiBarangController extends Controller
         })->paginate($perPage);
     }
 
+    function listbarang($idkategori, Request $request){
+
+        $barang=new Barang();
+        $barang = $barang->select('idbarang','namabarang','spesifikasi')
+                        ->where('idkategori','=',$idkategori);
+        return response()->json($barang->get());
+    }
+
 }

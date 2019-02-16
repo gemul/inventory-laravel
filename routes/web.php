@@ -107,6 +107,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::group(['middleware' => 'akses:admin'], function () {
             Route::get('/', ['as' => 'index', 'uses' => 'IndexController@index']);
             Route::resource('barang', 'TransaksiBarangController');
+            Route::get('barang/listbarang/{idkategori}', 'TransaksiBarangController@listbarang');
             Route::resource('peminjaman', 'TransaksiPeminjamanController');
 
         });

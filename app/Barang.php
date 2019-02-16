@@ -5,6 +5,7 @@ namespace App;
 use App\Traits\Models\Impersonator;
 use App\Traits\Eloquent\OrderableTrait;
 use App\Traits\Eloquent\SearchLikeTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\Models\FillableFields;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -21,6 +22,9 @@ class Barang extends Authenticatable
     protected $fillable = [
         'idkategori','kode', 'namabarang', 'spesifikasi', 'catatan'
     ];
+    use SoftDeletes;    
+    protected $dates = ['deleted'];
+    const DELETED_AT = 'deleted';
     const CREATED_AT = 'created';
     const UPDATED_AT = 'updated';
     protected $table = 'barang';
