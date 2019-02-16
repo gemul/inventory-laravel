@@ -5,11 +5,12 @@ namespace App;
 use App\Traits\Models\Impersonator;
 use App\Traits\Eloquent\OrderableTrait;
 use App\Traits\Eloquent\SearchLikeTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\Models\FillableFields;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Barang extends Authenticatable
+class Transaksi extends Authenticatable
 {
     use Notifiable, FillableFields, OrderableTrait, SearchLikeTrait, Impersonator;
     
@@ -19,21 +20,25 @@ class Barang extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'idkategori','kode', 'namabarang', 'spesifikasi', 'catatan'
+        'iduser','idbarang', 'tanggal', 'jenis', 'jumlah', 'lokasi', 'catatan'
     ];
+    use SoftDeletes;    
+    protected $dates = ['deleted'];
+    const DELETED_AT = 'deleted';
+
     const CREATED_AT = 'created';
     const UPDATED_AT = 'updated';
-    protected $table = 'barang';
-    protected $primaryKey = 'idbarang';
+    protected $table = 'transaksi';
+    protected $primaryKey = 'idtransaksi';
     /**
      * @return boolean
      */
 
-    public function kategori(){
-        return $this->belongsTo('App\Kategori','idkategori');
+    public function barang(){
+        return $this->belongsTo('App\Barang','idbarang');
     }
-    public function transaksi(){
-        return $this->hasMany('App\Transaksi','idbarang');
+    public function user(){
+        return $this->belongsTo('App\User','iduser');
     }
 
 }

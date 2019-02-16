@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Transaksi;
 
+use App\Transaksi;
 use App\Barang;
 use App\Kategori;
 use App\Utils;
@@ -29,8 +30,8 @@ class TransaksiBarangController extends Controller
      *
      * @var string
      */
-    protected $resourceModel = Barang::class;
-    protected $primaryKey = 'idbarang';
+    protected $resourceModel = Transaksi::class;
+    protected $primaryKey = 'idtransaksi';
     protected $hakAkses = Array(
         'index'=>'inventory-view',
         'add'=>'inventory-entry',
@@ -183,11 +184,24 @@ class TransaksiBarangController extends Controller
      */
     private function getSearchRecords(Request $request, $perPage = 15, $search = null)
     {
+        // return $this->getResourceModel()::when(! empty($search), function ($query) use ($search) {
+        //     $query->where(function ($query) use ($search) {
+        //         $query->where('tanggal', 'like', "%$search%")
+        //             ->orWhere('catatan', 'like', "%$search%");
+        //     });
+        // })->paginate($perPage);
+        
         return $this->getResourceModel()::when(! empty($search), function ($query) use ($search) {
-            $query->where(function ($query) use ($search) {
-                $query->where('kode', 'like', "%$search%")
-                    ->orWhere('namabarang', 'like', "%$search%");
+            $query->join('barang','transaksi.idbarang','=','barang.idbarang')->where(function ($query) use ($search) {
+                $query->where('transaksi.tanggal', 'like', "%$search%")
+                    ->orWhere('transaksi.catatan', 'like', "%$search%")
+                    ->orWhere('barang.namabarang', 'like', "%$search%")
+                    ->orWhere('transaksi.lokasi', 'like', "%$search%");
             });
+        })->when(isset($request->filter),function($query) use ($request){
+            if(isset($request->filter) && $request->filter != 'all'){
+                $query->where('jenis','=',$request->filter);
+            }
         })->paginate($perPage);
     }
 

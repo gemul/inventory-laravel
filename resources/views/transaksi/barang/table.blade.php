@@ -1,13 +1,11 @@
 <div class="table-responsive list-records">
     <table class="table table-hover table-bordered">
         <thead>
-            <!--<th style="width: 10px;"><button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i></button></th>-->
-            <th>#</th>
-            <th>Kategori</th>
-            <th>Kode</th>
-            <th>Nama Barang</th>
-            <th>Spesifikasi</th>
-            <th style="width: 120px;">Actions</th>
+            <th style="width:50px;"></th>
+            <th>Barang</th>
+            <th>Tanggal</th>
+            <th>Penginput</th>
+            <th style="width: 120px;">Aksi</th>
         </thead>
         <tbody>
         @foreach ($records as $record)
@@ -24,15 +22,18 @@
             ?>
             <tr>
             <!--<td><input type="checkbox" name="ids[]" value="{{ $record->$primaryKey }}" class="square-blue"></td>-->
-                <td>{{ $tableCounter }}</td>
-                <td class="table-text">
-                    <a href="{{ $editLink }}">{{ $record->kategori->nama }}</a>
+                <td>
+                    @if ($record->jenis == "masuk")
+                        <label class="label bg-green"><i class='fa fa-arrow-right'></i> Masuk</label>
+                    @else
+                        <label class="label bg-orange"><i class='fa fa-arrow-left'></i> Keluar</label>
+                    @endif
                 </td>
                 <td class="table-text">
-                    <a href="{{ $editLink }}">{{ $record->kode }}</a>
+                    <a href="{{ $editLink }}">{{ $record->barang->namabarang }}</a>
                 </td>
-                <td>{{ $record->namabarang }}</td>
-                <td>{{ $record->spesifikasi }}</td>
+                <td>{{ $record->tanggal }}</td>
+                <td>{{ $record->lokasi }}</td>
                 <!-- we will also add show, edit, and delete buttons -->
                 <td>
                     <div class="btn-group">
