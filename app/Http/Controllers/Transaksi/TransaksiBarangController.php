@@ -39,6 +39,12 @@ class TransaksiBarangController extends Controller
         'delete'=>'inventory-entry',
     );
 
+    protected $filters = Array(
+        'all'=>'Semua Transaksi',
+        'masuk'=>'Transaksi masuk',
+        'keluar'=>'Transaksi keluar',
+    );
+    
     /**
      * @var string
      */

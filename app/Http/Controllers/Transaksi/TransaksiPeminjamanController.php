@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Peminjaman;
+namespace App\Http\Controllers\Transaksi;
 
-use App\Transaksi;
+use App\Peminjaman;
 use App\Barang;
 use App\Kategori;
 use App\Utils;
@@ -11,27 +11,27 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Traits\Controllers\TransaksiController;
 
-class PeminjamanController extends Controller
+class TransaksiPeminjamanController extends Controller
 {
     use TransaksiController;
 
     /**
      * @var string
      */
-    protected $resourceAlias = 'transaksi.barang';
+    protected $resourceAlias = 'transaksi.peminjaman';
 
     /**
      * @var string
      */
-    protected $resourceRoutesAlias = 'transaksi::barang';
+    protected $resourceRoutesAlias = 'transaksi::peminjaman';
 
     /**
      * Fully qualified class name
      *
      * @var string
      */
-    protected $resourceModel = Transaksi::class;
-    protected $primaryKey = 'idtransaksi';
+    protected $resourceModel = Peminjaman::class;
+    protected $primaryKey = 'idpeminjaman';
     protected $hakAkses = Array(
         'index'=>'inventory-view',
         'add'=>'inventory-entry',
@@ -39,10 +39,16 @@ class PeminjamanController extends Controller
         'delete'=>'inventory-entry',
     );
 
+    protected $filters = Array(
+        'all'=>'Semua Status',
+        'pinjam'=>'Sedang Dipinjam',
+        'kembali'=>'Sudah Kembali',
+    );
+
     /**
      * @var string
      */
-    protected $resourceTitle = 'Transaksi Barang';
+    protected $resourceTitle = 'Transaksi Peminjaman';
 
     /**
      * Used to validate store.
@@ -193,15 +199,18 @@ class PeminjamanController extends Controller
         // })->paginate($perPage);
         
         return $this->getResourceModel()::when(! empty($search), function ($query) use ($search) {
-            $query->join('barang','transaksi.idbarang','=','barang.idbarang')->where(function ($query) use ($search) {
-                $query->where('transaksi.tanggal', 'like', "%$search%")
-                    ->orWhere('transaksi.catatan', 'like', "%$search%")
+            $query->join('barang','peminjaman.idbarang','=','barang.idbarang')->where(function ($query) use ($search) {
+                $query->where('peminjaman.tgl_pinjam', 'like', "%$search%")
+                    ->orWhere('peminjaman.catatan', 'like', "%$search%")
+                    ->orWhere('peminjaman.nama', 'like', "%$search%")
                     ->orWhere('barang.namabarang', 'like', "%$search%")
-                    ->orWhere('transaksi.lokasi', 'like', "%$search%");
+                    ->orWhere('peminjaman.nomorbukti', 'like', "%$search%");
             });
         })->when(isset($request->filter),function($query) use ($request){
-            if(isset($request->filter) && $request->filter != 'all'){
-                $query->where('jenis','=',$request->filter);
+            if(isset($request->filter) && $request->filter == 'pinjam'){
+                $query->whereNull('peminjaman.kembali');
+            }else if(isset($request->filter) && $request->filter == 'kembali'){
+                $query->whereNotNull('peminjaman.kembali');
             }
         })->paginate($perPage);
     }

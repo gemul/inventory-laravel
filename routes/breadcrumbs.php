@@ -57,6 +57,7 @@ $resources = [
     'users' => 'Users',
     'kategori' => 'Kategori',
     'barang' => 'Barang',
+    'peminjaman' => 'Peminjaman',
 ];
 foreach ($resources as $resource => $data) {
     $parent = 'admin';

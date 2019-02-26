@@ -46,6 +46,7 @@ trait TransaksiController
             'resourceRoutesAlias' => $this->getResourceRoutesAlias(),
             'resourceTitle' => $this->getResourceTitle(),
             'perPage' => $perPage,
+            'filters' => $this->filters,
         ]));
     }
 

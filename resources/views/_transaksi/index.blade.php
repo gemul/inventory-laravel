@@ -44,9 +44,9 @@ if (count($records) > 0) {
                 <form class="form" role="form" method="GET" action="{{ $_listLink }}">
                     <div class="input-group input-group-sm margin-r-5 pull-left" style="width: 200px;">
                         <select type="text" name="filter" class="form-control" placeholder="Filter">
-                            <option value='all'>Semua Transaksi</option>
-                            <option value='masuk'>Transaksi Masuk</option>
-                            <option value='keluar'>Transaksi Keluar</option>
+                            @foreach ($filters as $filter=>$item)
+                            <option value='{{ $filter }}'>{{$item}}</option>
+                            @endforeach
                         </select>
                         <div class="input-group-btn">
                             <button type="submit" class="btn btn-primary"><i class="fa fa-filter"></i></button>
