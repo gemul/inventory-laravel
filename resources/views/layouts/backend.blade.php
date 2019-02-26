@@ -49,6 +49,13 @@
         <!-- Google Font -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
+        <!-- jQuery 3 -->
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <!-- bootstrap datetimepicker -->
+        <link rel="stylesheet" href="{{ cdn_asset('/adminlte/plugins/tempus-dominus/tempus-dominus.css') }}">
+        <!-- bootstrap datetimepicker -->
+        <script src="{{ cdn_asset('/adminlte/plugins/moment/moment.js') }}"></script>
+        <script src="{{ cdn_asset('/adminlte/plugins/tempus-dominus/tempus-dominus.js') }}"></script>
         @yield('head-extras')
     </head>
 
@@ -104,8 +111,6 @@
         </div>
         <!-- ./wrapper -->
 
-        <!-- jQuery 3 -->
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <!-- Bootstrap 3.3.7 -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <!-- SlimScroll -->

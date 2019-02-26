@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Transaksi;
+namespace App\Http\Controllers\Peminjaman;
 
 use App\Transaksi;
 use App\Barang;
@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Traits\Controllers\TransaksiController;
 
-class TransaksiBarangController extends Controller
+class PeminjamanController extends Controller
 {
     use TransaksiController;
 

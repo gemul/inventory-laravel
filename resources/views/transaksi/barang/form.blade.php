@@ -1,7 +1,7 @@
 <div class="col-md-7">
     <div class="col-md-12">
         <div class="form-group margin-b-5 margin-t-5{{ $errors->has('kategori') ? ' has-error' : '' }}">
-            <label for="kode">Kategori</label>
+            <label for="idkategori">Kategori</label>
             <select class='form-control' name='idkategori' onchange="updateBarang(this);">
                 <option value="" >Pilih Salah Satu</option>
                 @foreach ($kategoriList as $kategori)
@@ -12,7 +12,6 @@
                     @endif
                 @endforeach
             </select>
-
             @if ($errors->has('kategori'))
                 <span class="help-block">
                     <strong>{{ $errors->first('kategori') }}</strong>
@@ -23,7 +22,7 @@
     </div>
     <div class="col-md-12">
         <div class="form-group margin-b-5 margin-t-5">
-            <label for="kode">Barang</label>
+            <label for="idbaran">Barang</label>
             <select class='form-control' name='idbarang' required='required' id='input-barang' style="display:none;">
             </select>
 
@@ -55,7 +54,7 @@
                     if(listBarang.length >= 1){
                         var options="";
                         listBarang.forEach(function(item){
-                            options+="<option value='"+item.idbarang+"'>"+item.namabarang+"</option>"
+                            options+="<option value='"+item.idbarang+"'>"+item.kode+"-"+item.namabarang+"</option>"
                         });
                         $('#input-barang').html(options).show();
                         $('#input-barang-status').hide();
@@ -79,39 +78,42 @@
     }
     </script>
     <div class="col-md-12">
-        <div class="form-group margin-b-5 margin-t-5{{ $errors->has('kode') ? ' has-error' : '' }}">
-            <label for="kode">Kode</label>
-            <input type="text" class="form-control" name="kode" placeholder="Kode" value="{{ old('kode', $record->kode) }}" required>
+        <div class="form-group margin-b-5 margin-t-5{{ $errors->has('jenis') ? ' has-error' : '' }}">
+            <label for="jenis">Keluar/Masuk</label>
+            <select class='form-control' name='jenis'>
+                <option value="masuk" >Masuk</option>
+                <option value="keluar" >Keluar</option>
+            </select>
 
-            @if ($errors->has('kode'))
+            @if ($errors->has('jenis'))
                 <span class="help-block">
-                    <strong>{{ $errors->first('kode') }}</strong>
+                    <strong>{{ $errors->first('jenis') }}</strong>
                 </span>
             @endif
         </div>
         <!-- /.form-group -->
     </div>
     <div class="col-md-12">
-        <div class="form-group margin-b-5 margin-t-5{{ $errors->has('namabarang') ? ' has-error' : '' }}">
-            <label for="namabarang">Namabarang</label>
-            <input type="text" class="form-control" name="namabarang" placeholder="Namabarang" value="{{ old('namabarang', $record->namabarang) }}" required>
+        <div class="form-group margin-b-5 margin-t-5{{ $errors->has('jumlah') ? ' has-error' : '' }}">
+            <label for="jumlah">Jumlah</label>
+            <input type="number" class="form-control" name="jumlah" placeholder="Jumlah" value="{{ old('jumlah', $record->jumlah) }}" required>
 
-            @if ($errors->has('namabarang'))
+            @if ($errors->has('jumlah'))
                 <span class="help-block">
-                    <strong>{{ $errors->first('namabarang') }}</strong>
+                    <strong>{{ $errors->first('jumlah') }}</strong>
                 </span>
             @endif
         </div>
         <!-- /.form-group -->
     </div>
     <div class="col-md-12">
-        <div class="form-group margin-b-5 margin-t-5{{ $errors->has('spesifikasi') ? ' has-error' : '' }}">
-            <label for="spesifikasi">spesifikasi</label>
-            <textarea class="form-control" name="spesifikasi" placeholder="spesifikasi">{{ old('spesifikasi', $record->spesifikasi) }}</textarea>
+        <div class="form-group margin-b-5 margin-t-5{{ $errors->has('lokasi') ? ' has-error' : '' }}">
+            <label for="lokasi">lokasi</label>
+            <input type="text" class="form-control" name="lokasi" placeholder="lokasi" value="{{ old('lokasi', $record->lokasi) }}">
 
-            @if ($errors->has('spesifikasi'))
+            @if ($errors->has('lokasi'))
                 <span class="help-block">
-                    <strong>{{ $errors->first('spesifikasi') }}</strong>
+                    <strong>{{ $errors->first('lokasi') }}</strong>
                 </span>
             @endif
         </div>
@@ -120,7 +122,7 @@
     <div class="col-md-12">
         <div class="form-group margin-b-5 margin-t-5{{ $errors->has('catatan') ? ' has-error' : '' }}">
             <label for="catatan">catatan</label>
-            <textarea class="form-control" name="catatan" placeholder="catatan">{{ old('catatan', $record->catatan) }}</textarea>
+            <input type="text" class="form-control" name="catatan" placeholder="catatan" value="{{ old('catatan', $record->catatan) }}">
 
             @if ($errors->has('catatan'))
                 <span class="help-block">
@@ -130,6 +132,26 @@
         </div>
         <!-- /.form-group -->
     </div>
+    <div class="col-md-12">
+        <div class="form-group margin-b-5 margin-t-5{{ $errors->has('tanggal') ? ' has-error' : '' }}">
+            <label for="tanggal">tanggal</label>
+            <input type="text" class="form-control" name="tanggal" id="datepicker" placeholder="tanggal" value="{{ old('tanggal', $record->tanggal) }}" required>
+
+            @if ($errors->has('tanggal'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('tanggal') }}</strong>
+                </span>
+            @endif
+        </div>
+        <!-- /.form-group -->
+    </div>
+    <script>
+        $(document).ready(function(){
+             $('#datepicker').datetimepicker({
+                 format:'YYYY-MM-DD HH:mm:ss'
+             });
+        });
+    </script>
 
 </div>
 <!-- /.col-md-7 -->

@@ -81,11 +81,9 @@ trait TransaksiController
         if(!Auth::user()->hakAkses($this->hakAkses['add'])){
             $this->authorize('forceFail');
         }
-
         $valuesToSave = $this->getValuesToSave($request);
         $request->merge($valuesToSave);
         $this->resourceValidate($request, 'store');
-
         if ($record = $this->getResourceModel()::create($this->alterValuesToSave($request, $valuesToSave))) {
             flash()->success('Element successfully inserted.');
 

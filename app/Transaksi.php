@@ -20,7 +20,7 @@ class Transaksi extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'iduser','idbarang', 'tanggal', 'jenis', 'jumlah', 'lokasi', 'catatan'
+        'iduser', 'idbarang', 'tanggal', 'jenis', 'jumlah', 'lokasi', 'catatan'
     ];
     use SoftDeletes;    
     protected $dates = ['deleted'];

@@ -30,7 +30,7 @@
                     @endif
                 </td>
                 <td class="table-text">
-                    <a href="{{ $editLink }}">{{ $record->barang->namabarang }}</a>
+                    {{ $record->barang->namabarang }}
                 </td>
                 <td>{{ $record->tanggal }}</td>
                 <td>{{ $record->lokasi }}</td>

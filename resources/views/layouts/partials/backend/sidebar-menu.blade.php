@@ -6,7 +6,7 @@
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
         </a>
     </li>
-    @if (Auth::user()->can('viewList', \App\User::class))
+    @if (Auth::user()->hakAkses('user-entry'))
         <li class="{{ \App\Utils::checkRoute(['admin::users.index', 'admin::users.create']) ? 'active': '' }}">
             <a href="{{ route('admin::users.index') }}">
                 <i class="fa fa-user-secret"></i> <span>Users</span>
