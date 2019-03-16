@@ -109,7 +109,8 @@ Route::group(['middleware' => 'auth'], function () {
             Route::resource('barang', 'TransaksiBarangController');
             Route::get('barang/listbarang/{idkategori}', 'TransaksiBarangController@listbarang');
             Route::resource('peminjaman', 'TransaksiPeminjamanController');
-
+            Route::get('peminjaman/listbarang/{idkategori}', 'TransaksiPeminjamanController@listbarang');
+            
         });
     });
 

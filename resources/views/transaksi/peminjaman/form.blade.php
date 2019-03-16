@@ -78,42 +78,59 @@
     }
     </script>
     <div class="col-md-12">
-        <div class="form-group margin-b-5 margin-t-5{{ $errors->has('jenis') ? ' has-error' : '' }}">
-            <label for="jenis">Keluar/Masuk</label>
-            <select class='form-control' name='jenis'>
-                <option value="masuk" >Masuk</option>
-                <option value="keluar" >Keluar</option>
+        <div class="form-group margin-b-5 margin-t-5{{ $errors->has('nama') ? ' has-error' : '' }}">
+            <label for="nama">Nama Peminjam</label>
+            <input type="text" class="form-control" name="nama" placeholder="Nama Peminjam" value="{{ old('nama', $record->nama) }}" required>
+
+            @if ($errors->has('nama'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('nama') }}</strong>
+                </span>
+            @endif
+        </div>
+        <!-- /.form-group -->
+    </div>
+    <div class="col-md-12">
+        <div class="form-group margin-b-5 margin-t-5{{ $errors->has('tgl_pinjam') ? ' has-error' : '' }}">
+            <label for="tgl_pinjam">Tanggal Pinjam</label>
+            <input type="text" class="form-control" name="tgl_pinjam" id="datepicker" placeholder="tgl_pinjam" value="{{ old('tgl_pinjam', $record->tgl_pinjam) }}" required>
+
+            @if ($errors->has('tgl_pinjam'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('tgl_pinjam') }}</strong>
+                </span>
+            @endif
+        </div>
+        <!-- /.form-group -->
+    </div>
+    <div class="col-md-12">
+        <div class="form-group margin-b-5 margin-t-5{{ $errors->has('bukti') ? ' has-error' : '' }}">
+            <label for="bukti">Bukti</label>
+            <select class='form-control' name='bukti'>
+                <option value="Kartu Peminjaman" >Kartu Peminjaman</option>
+                <option value="KTP" >KTP</option>
+                <option value="SIM" >SIM</option>
+                <option value="KTM" >KTM</option>
+                <option value="Kartu Pelajar" >Kartu Pelajar</option>
+                <option value="Lain" >Lain</option>
             </select>
 
-            @if ($errors->has('jenis'))
+            @if ($errors->has('bukti'))
                 <span class="help-block">
-                    <strong>{{ $errors->first('jenis') }}</strong>
+                    <strong>{{ $errors->first('bukti') }}</strong>
                 </span>
             @endif
         </div>
         <!-- /.form-group -->
     </div>
     <div class="col-md-12">
-        <div class="form-group margin-b-5 margin-t-5{{ $errors->has('jumlah') ? ' has-error' : '' }}">
-            <label for="jumlah">Jumlah</label>
-            <input type="number" class="form-control" name="jumlah" placeholder="Jumlah" value="{{ old('jumlah', $record->jumlah) }}" required>
+        <div class="form-group margin-b-5 margin-t-5{{ $errors->has('nomorbukti') ? ' has-error' : '' }}">
+            <label for="nomorbukti">Nomor Bukti</label>
+            <input type="text" class="form-control" name="nomorbukti" placeholder="nomorbukti" value="{{ old('nomorbukti', $record->nomorbukti) }}">
 
-            @if ($errors->has('jumlah'))
+            @if ($errors->has('nomorbukti'))
                 <span class="help-block">
-                    <strong>{{ $errors->first('jumlah') }}</strong>
-                </span>
-            @endif
-        </div>
-        <!-- /.form-group -->
-    </div>
-    <div class="col-md-12">
-        <div class="form-group margin-b-5 margin-t-5{{ $errors->has('lokasi') ? ' has-error' : '' }}">
-            <label for="lokasi">lokasi</label>
-            <input type="text" class="form-control" name="lokasi" placeholder="lokasi" value="{{ old('lokasi', $record->lokasi) }}">
-
-            @if ($errors->has('lokasi'))
-                <span class="help-block">
-                    <strong>{{ $errors->first('lokasi') }}</strong>
+                    <strong>{{ $errors->first('nomorbukti') }}</strong>
                 </span>
             @endif
         </div>
@@ -127,19 +144,6 @@
             @if ($errors->has('catatan'))
                 <span class="help-block">
                     <strong>{{ $errors->first('catatan') }}</strong>
-                </span>
-            @endif
-        </div>
-        <!-- /.form-group -->
-    </div>
-    <div class="col-md-12">
-        <div class="form-group margin-b-5 margin-t-5{{ $errors->has('tanggal') ? ' has-error' : '' }}">
-            <label for="tanggal">tanggal</label>
-            <input type="text" class="form-control" name="tanggal" id="datepicker" placeholder="tanggal" value="{{ old('tanggal', $record->tanggal) }}" required>
-
-            @if ($errors->has('tanggal'))
-                <span class="help-block">
-                    <strong>{{ $errors->first('tanggal') }}</strong>
                 </span>
             @endif
         </div>
