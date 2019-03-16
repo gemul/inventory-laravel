@@ -113,5 +113,15 @@ Route::group(['middleware' => 'auth'], function () {
             
         });
     });
+    Route::group(['prefix' => 'peminjaman', 'namespace' => 'Peminjaman', 'as'=>'peminjaman::'], function () {
+        /**
+         * Admin Access
+         */
+        Route::group(['middleware' => 'akses:admin'], function () {
+            Route::get('/', ['as' => 'index', 'uses' => 'PeminjamanController@index']);
+            Route::get('/ajax/{ajaxname}', ['as' => 'ajax', 'uses' => 'PeminjamanController@ajax']);
+            
+        });
+    });
 
 });
