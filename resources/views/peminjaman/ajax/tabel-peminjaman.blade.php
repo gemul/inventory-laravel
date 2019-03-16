@@ -9,7 +9,6 @@ if($hari==0){
 }else{
     $lama=$hari." Hari, ".$jam." Jam" ;
 }
-$debug=time()."-".strtotime($item->tgl_pinjam)."-".$delta."-".$hari;
 ?>
                                 <tr>
                                     <td>{{ $item->nama }}</td>
@@ -22,5 +21,5 @@ $debug=time()."-".strtotime($item->tgl_pinjam)."-".$delta."-".$hari;
 endforeach;
 ?>
                                 <tr>
-                                    <td colspan="5">Terakhir di update : {{ date("Y-m-d H:i:s") }}</td>
+                                    <td colspan="5"><b>Terakhir di update : </b>{{ date("Y-m-d H:i:s") }}</td>
                                 </tr>

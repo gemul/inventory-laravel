@@ -30,30 +30,39 @@ $_storeLink = 'peminjaman.index';
             <!-- Edit Form -->
             <div class="box box-info" id="wrap-edit-box">
 
-                <form class="form" role="form" method="POST" action="{{ $_storeLink }}" {!! $_formFiles === true ? 'enctype="multipart/form-data"' : '' !!}>
+                <form class="form form-horizontal" role="form" method="POST" action="{{ $_storeLink }}" {!! $_formFiles === true ? 'enctype="multipart/form-data"' : '' !!}>
                     {{ csrf_field() }}
 
                     {{ redirect_back_field() }}
 
                     <div class="box-header with-border">
-                        <h3 class="box-title">Add new</h3>
+                        <h3 class="box-title">Tambah Data Peminjaman</h3>
 
                         <div class="box-tools">
-                            <a href="{{ $_listLink }}" class="btn btn-sm btn-primary margin-r-5 margin-l-5">
-                                <i class="fa fa-search"></i> <span>List</span>
-                            </a>
-                            <a href="{{ $_createLink }}" class="btn btn-sm btn-primary margin-r-5 margin-l-5">
-                                <i class="fa fa-plus"></i> <span>Add</span>
-                            </a>
-                            <button class="btn btn-sm btn-info margin-r-5 margin-l-5">
-                                <i class="fa fa-save"></i> <span>Save</span>
-                            </button>
                         </div>
                     </div>
                     <!-- /.box-header -->
 
                     <div class="box-body">
-                        
+                        <div class="col-md-12">
+                            <div class="form-group margin-b-5 margin-t-5{{ $errors->has('kategori') ? ' has-error' : '' }}">
+                                <label for="idkategori" class="col-sm-4">Kategori</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name='idkategori' onchange="updateBarang(this);">
+                                        <option value="" >Pilih Salah Satu</option>
+                                        @foreach ($kategoriList as $kategori)
+                                            <option value="{{ $kategori->idkategori }}" >{{ $kategori->nama }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('kategori'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('kategori') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+                            <!-- /.form-group -->
+                        </div>
                     </div>
                     <!-- /.box-body -->
 

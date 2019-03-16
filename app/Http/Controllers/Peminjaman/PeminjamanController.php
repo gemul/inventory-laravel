@@ -14,7 +14,11 @@ class PeminjamanController extends Controller
 {
 
     function index(Request $request){
-        return view('peminjaman.entri');
+        $kategori = new Kategori();
+        $data=Array(
+            'kategoriList' => $kategori->orderBy('nama','desc')->get()
+        );
+        return view('peminjaman.entri',$data);
     }
 
     function ajax(Request $request){
