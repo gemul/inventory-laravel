@@ -45,20 +45,53 @@ $_storeLink = 'peminjaman.index';
 
                     <div class="box-body">
                         <div class="col-md-12">
-                            <div class="form-group margin-b-5 margin-t-5{{ $errors->has('kategori') ? ' has-error' : '' }}">
-                                <label for="idkategori" class="col-sm-4">Kategori</label>
+                            <div class="form-group margin-b-5 margin-t-5">
+                                <label for="idbarang" class="col-sm-4">Barang</label>
                                 <div class="col-sm-8">
-                                    <select class="form-control" name='idkategori' onchange="updateBarang(this);">
-                                        <option value="" >Pilih Salah Satu</option>
-                                        @foreach ($kategoriList as $kategori)
-                                            <option value="{{ $kategori->idkategori }}" >{{ $kategori->nama }}</option>
-                                        @endforeach
+                                    <select class='form-control' name='idbarang' required='required' id='idbarang'>
                                     </select>
-                                    @if ($errors->has('kategori'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('kategori') }}</strong>
-                                        </span>
-                                    @endif
+                                </div>
+                            </div>
+                            <!-- /.form-group -->
+                            <div class="form-group margin-b-5 margin-t-5">
+                                <label for="nama" class="col-sm-4">Nama Peminjam</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="namapeminjam" id="nama-peminjam" data-provide="typeahead" placeholder="Nama Peminjam" value="" autocomplete="off" required>
+                                </div>
+                            </div>
+                            <!-- /.form-group -->
+                            <div class="form-group margin-b-5 margin-t-5">
+                                <label for="bukti" class="col-sm-4">Bukti</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="bukti" id="bukti" placeholder="Bukti (KTP,KTM,Kartu Pelajar,Kartu Peminjaman)" value="" required>
+                                </div>
+                            </div>
+                            <!-- /.form-group -->
+                            <div class="form-group margin-b-5 margin-t-5">
+                                <label for="bukti" class="col-sm-4">No Bukti</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="nomorbukti" id="nomorbukti" placeholder="No Bukti (KTP,KTM,Kartu Pelajar,Kartu Peminjaman)" value="" autocomplete="off" required>
+                                </div>
+                            </div>
+                            <!-- /.form-group -->
+                            <div class="form-group margin-b-5 margin-t-5">
+                                <label for="tgl_pinjam" class="col-sm-4">Tanggal</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="tgl_pinjam" id="tgl_pinjam" value="" autocomplete="off" required>
+                                </div>
+                            </div>
+                            <!-- /.form-group -->
+                            <div class="form-group margin-b-5 margin-t-5">
+                                <label for="label" class="col-sm-4">Label</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="label" id="label" placeholder="opsional" value="" autocomplete="off">
+                                </div>
+                            </div>
+                            <!-- /.form-group -->
+                            <div class="form-group margin-b-5 margin-t-5">
+                                <label for="Catatan" class="col-sm-4">Catatan</label>
+                                <div class="col-sm-8">
+                                    <textarea class="form-control" name="catatan" id="catatan" placeholder="opsional"></textarea>
                                 </div>
                             </div>
                             <!-- /.form-group -->
@@ -147,6 +180,63 @@ $_storeLink = 'peminjaman.index';
     </div>
     <!-- /.row -->
     <script>
+    $(document).ready(function(){
+        $('#idbarang').select2({
+            ajax: {
+                delay: 250, // wait 250 milliseconds before triggering the request
+                quietMillis: 200,
+                url: "{{ route('peminjaman::ajax','select-barang') }}",
+                dataType: 'json',
+                data: function (params) {
+                    var query = {
+                        search: params.term,
+                        page: params.page || 1
+                    }
+                    return query;
+                },
+                cache: true
+            },
+            language: {
+                noResults: function (params) {
+                    return "Tidak ditemukan.";
+                }
+            }
+        });
+
+        //typeahead
+        $('#nama-peminjam').typeahead({
+            source: function (query, process) {
+                return $.getJSON("{{ route('peminjaman::ajax','typeahead-nama') }}", 
+                    { query: query }, 
+                    function (data) {
+                        return process(data.options);
+                    }
+                );
+            },
+            updater:function(data){
+                $('#bukti').val(data.bukti);
+                $('#nomorbukti').val(data.nomorbukti);
+                return data.name;
+            },
+            changeInputOnSelect:true
+        });
+        // $('#nama-peminjam').typeahead({
+        // remote: "{{ route('peminjaman::ajax','typeahead-nama') }}",
+        // limit: 10                                                                   
+        // });
+        // $('#nama-peminjam').typeahead({
+        //   source: [
+        //         {id: "id1", name: "jQuery"},
+        //         {id: "id2", name: "Script"},
+        //         {id: "id3", name: "Net"}
+        //     ]                                                                  
+        // });
+        $('#tgl_pinjam').datetimepicker({
+            locale: 'id',
+            format:"YYYY-MM-DD HH:mm:ss"
+        });
+    });
+    
     function loadTabelPeminjaman(){
         $.ajax({
             'url':"{{ route('peminjaman::ajax','tabel-peminjaman') }}",
@@ -161,6 +251,51 @@ $_storeLink = 'peminjaman.index';
                 $("#dataPeminjam").html("<tr><td colspan='' style='text-align:center'>Terjadi kesalahan. Tidak ada data yg ditampilkan</td></tr>");
             }
         });
+    }
+    
+    //-------------------list barang
+    var listBarang;
+    function updateBarang(kategori){
+        if(kategori.value==''){
+            $('#input-barang-status').show().html("Pilih kategori barang.");
+            $('#input-barang').hide();
+        }else{
+            $.ajax({
+                url:'transaksi/peminjaman/listbarang/'+kategori.value,
+                type:'get',
+                dataType:'json',
+                data:{'idkategori':kategori.value},
+                beforeSend:function(){
+                    $('#input-barang').hide();
+                    $('#input-barang-status').show().html("<strong><i class='fa fa-spinner fa-spin'></i> Memuat List Barang</strong>");
+                    console.log("beforesend triggered");
+                },
+                success:function(result){
+                    listBarang=result;
+                    if(listBarang.length >= 1){
+                        var options="";
+                        listBarang.forEach(function(item){
+                            options+="<option value='"+item.idbarang+"'>"+item.kode+"-"+item.namabarang+"</option>"
+                        });
+                        $('#input-barang').html(options).show();
+                        $('#input-barang-status').hide();
+                    }else{
+                        $('#input-barang-status').show().html("<strong>Tidak ada barang didalam kategori ini.</strong>");
+                        $('#input-barang').hide();
+                    }
+                },
+                error:function(err){
+                    console.log(err);
+                    $('#input-barang-status').show().html("<strong>Kesalahan saat memuat data</strong>");
+                    $('#input-barang').hide();
+                },
+                complete:function(){
+
+                }
+            });
+
+        }
+        
     }
     </script>
 @endsection

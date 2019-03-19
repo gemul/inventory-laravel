@@ -23,9 +23,7 @@
         <link href="{{ cdn_asset('/adminlte/plugins/iCheck/all.css') }}" rel="stylesheet" type="text/css">
         <!-- Select2 -->
         <link href="{{ cdn_asset('/adminlte/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css">
-        <!-- datetimepicker -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
-
+        
         <!-- EXTRAS -->
         @stack('head-scripts')
 
@@ -50,12 +48,14 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
         <!-- jQuery 3 -->
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-        <!-- bootstrap datetimepicker -->
-        <link rel="stylesheet" href="{{ cdn_asset('/adminlte/plugins/tempus-dominus/tempus-dominus.css') }}">
-        <!-- bootstrap datetimepicker -->
-        <script src="{{ cdn_asset('/adminlte/plugins/moment/moment.js') }}"></script>
-        <script src="{{ cdn_asset('/adminlte/plugins/tempus-dominus/tempus-dominus.js') }}"></script>
+        <script src="{{ cdn_asset('/adminlte/plugins/jquery/jquery.min.js') }}"></script>
+        <!-- typeahead -->
+        <script src="{{ cdn_asset('/adminlte/plugins/typeahead/bootstrap3-typeahead.min.js') }}"></script>
+        
+        <!-- datetimepicker -->
+        {{-- <link href="{{ cdn_asset('/adminlte/plugins/datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" /> --}}
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">
         @yield('head-extras')
     </head>
 
@@ -118,6 +118,13 @@
         <!-- FastClick -->
         <script src="{{ cdn_asset('/adminlte/plugins/fastclick/fastclick.js') }}"></script>
 
+        <!-- Datepicker -->
+        {{-- <script src="{{ cdn_asset('/adminlte/plugins/datepicker/bootstrap-datepicker.min.js') }}"></script> --}}
+        <script src="{{ cdn_asset('/adminlte/plugins/moment/moment.js') }}"></script>
+        <script src="{{ cdn_asset('/adminlte/plugins/moment/locale/id.js') }}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+
         <!-- Plugins -->
         <!-- iCheck for checkboxes and radio inputs -->
         <script src="{{ cdn_asset('/adminlte/plugins/iCheck/icheck.min.js') }}" type="text/javascript"></script>
@@ -125,8 +132,6 @@
         <script src="{{ cdn_asset('/adminlte/plugins/select2/js/select2.min.js') }}" type="text/javascript"></script>
         <!-- Moment Js-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-        <!-- DatetimePicker Js-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
         <!-- END - Plugins -->
 
         <!-- AdminLTE App -->

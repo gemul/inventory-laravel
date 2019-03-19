@@ -40,4 +40,10 @@ class Barang extends Authenticatable
         return $this->hasMany('App\Transaksi','idbarang');
     }
 
+    public function scopeCari($query,$keyword){
+        return $query->join('kategori','barang.idkategori','=','kategori.idkategori')
+                    ->where('namabarang','like',"%".$keyword."%")
+                    ->orWhere('nama','like',"%".$keyword."%");
+    }
+
 }

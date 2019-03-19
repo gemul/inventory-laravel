@@ -2,6 +2,7 @@
 
 namespace App;
 
+use DB;
 use App\Traits\Models\Impersonator;
 use App\Traits\Eloquent\OrderableTrait;
 use App\Traits\Eloquent\SearchLikeTrait;
@@ -39,6 +40,15 @@ class Peminjaman extends Authenticatable
     }
     public function user(){
         return $this->belongsTo('App\User','iduser');
+    }
+
+    public static function taPeminjam($keyword){
+        $data=DB::table('helper_peminjam')
+            ->select('peminjam_text','peminjam_bukti','peminjam_nomorbukti')
+            ->where('peminjam_text','like',"%".$keyword."%")
+            ->whereNull('deleted')
+            ->get();
+        return $data;
     }
 
 }
