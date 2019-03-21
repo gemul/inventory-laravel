@@ -74,19 +74,44 @@ class PeminjamanController extends Controller
                     "options" => $result
                 ]);
             break;
+            case "pengembalian":
+                return "a";
+            break;
         }
     }
     function simpanPeminjaman(Request $request){
-        //cek dan simpan helper peminjam
+        //validasi
+        $validatedData = $request->validate([
+            'idbarang' => 'required|integer',
+            'nama' => 'required',
+            'tgl_pinjam' => 'required',
+        ]);
+
+        //cek dan simpan/update helper peminjam
         $cek=Peminjaman::getPeminjam($request->nama);
         if($cek==0){
-            $peminjam= new Peminjaman();
-            $peminjam->username= $request['username'];
-            $peminjam->company= $request['company'];
-            // add other fields
-            $user->save();
+            Peminjaman::addPeminjam($request);
+        }else{
+            Peminjaman::updatePeminjam($request);
         }
+
         //simpan data peminjaman
+        try{
+            $peminjaman=new Peminjaman;
+            $peminjaman->iduser = Auth::user()->iduser ;
+            $peminjaman->idbarang = $request->idbarang ;
+            $peminjaman->nama = $request->nama ;
+            $peminjaman->tgl_pinjam = $request->tgl_pinjam ;
+            $peminjaman->bukti = $request->bukti ;
+            $peminjaman->nomorbukti = $request->nomorbukti ;
+            $peminjaman->label = $request->label ;
+            $peminjaman->catatan = $request->catatan ;
+            $peminjaman->save();
+            return json_encode(['status'=>'ok','message'=>""]);
+        }
+        catch(\Exception $e){
+            return json_encode(['status'=>'fail','message'=>"Terjadi kesalahan sistem saat menyimpan"]);
+        }
 
         //respon
         return json_encode($request->idbarang);

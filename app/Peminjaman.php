@@ -26,9 +26,9 @@ class Peminjaman extends Authenticatable
     use SoftDeletes;    
     protected $dates = ['deleted'];
     const DELETED_AT = 'deleted';
-
     const CREATED_AT = 'created';
     const UPDATED_AT = 'updated';
+    public $timestamps = false;
     protected $table = 'peminjaman';
     protected $primaryKey = 'idpeminjaman';
     /**
@@ -60,14 +60,25 @@ class Peminjaman extends Authenticatable
         return $data;
     }
 
-    public static function addPeminjam($nama){
-        
-        $data=DB::table('helper_peminjam')
-            ->select('peminjam_text')
-            ->where('peminjam_text','=',$nama)
-            ->whereNull('deleted')
-            ->count();
-        return $data;
+    public static function addPeminjam($data){
+        $helper=DB::table('helper_peminjam')->insert([
+            [
+                'peminjam_text' => $data->nama,
+                'peminjam_bukti' => $data->bukti,
+                'peminjam_nomorbukti' => $data->nomorbukti
+            ]
+        ]);
+        return $helper;
+    }
+
+    public static function updatePeminjam($data){
+        $helper=DB::table('helper_peminjam')
+            ->where('peminjam_text', $data->nama)
+            ->update([
+                'peminjam_bukti' => $data->bukti,
+                'peminjam_nomorbukti' => $data->nomorbukti
+            ]);
+        return $helper;
     }
 
 }

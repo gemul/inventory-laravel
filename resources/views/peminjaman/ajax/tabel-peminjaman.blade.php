@@ -4,10 +4,14 @@ $delta = time() - strtotime($item->tgl_pinjam) ;
 $hari = floor( $delta / (60*60*24) ) ;
 $sisaDetik = $delta % (60*60*24) ;
 $jam = round( $sisaDetik / (60*60) );
-if($hari==0){
-    $lama=$jam." Jam" ;
+$sisaDetik = $sisaDetik % (60*60) ;
+$menit = round( $sisaDetik/60 );
+if($hari==0 && $jam==0){
+    $lama=$menit ." Menit " ;
+}elseif($hari==0 && $jam!=0){
+    $lama=$jam." Jam " . $menit ." Menit ";
 }else{
-    $lama=$hari." Hari, ".$jam." Jam" ;
+    $lama=$hari." Hari, ".$jam." Jam ";
 }
 ?>
                                 <tr>

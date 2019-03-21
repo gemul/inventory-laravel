@@ -56,7 +56,7 @@ $_storeLink = 'peminjaman.store';
                             <div class="form-group margin-b-5 margin-t-5">
                                 <label for="nama" class="col-sm-4">Nama Peminjam</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="namapeminjam" id="nama-peminjam" data-provide="typeahead" placeholder="Nama Peminjam" value="" autocomplete="off" required>
+                                    <input type="text" class="form-control" name="nama" id="nama-peminjam" data-provide="typeahead" placeholder="Nama Peminjam" value="" autocomplete="off" required>
                                 </div>
                             </div>
                             <!-- /.form-group -->
@@ -108,7 +108,7 @@ $_storeLink = 'peminjaman.store';
                         <!-- Edit Button -->
                         <div class="col-xs-6">
                             <div class="margin-b-5 margin-t-5" id="statusSimpanPeminjaman">
-                                ser
+                                
                             </div>
                         </div>
                         <div class="col-xs-6">
@@ -243,6 +243,8 @@ $_storeLink = 'peminjaman.store';
             e.preventDefault();
             simpanPeminjaman(this);
         });
+        
+        loadTabelPeminjaman();
     });
     
     function loadTabelPeminjaman(){
@@ -341,10 +343,16 @@ $_storeLink = 'peminjaman.store';
                 }
                 // enable input
                 $('#formPeminjaman').find('input:text, input:password, select, textarea').prop("readonly",false);
+                loadTabelPeminjaman();
             },
-            error: function() {
-                alert('error handling here');
-                notifikasi("Terjadi kesalahan koneksi","danger");
+            error: function(xhr,status,err) {
+                var result=JSON.parse(xhr.responseText);
+                if(result.errors!==undefined){
+                    var kesalahan=result.errors[Object.keys(result.errors)[0]][0];
+                    notifikasi("Kesalahan : "+kesalahan,"danger");
+                }else{
+                    notifikasi("Terjadi kesalahan koneksi","danger");
+                }
                 $('#formPeminjaman').find('input:text, input:password, select, textarea').prop("readonly",false);
             }
         });

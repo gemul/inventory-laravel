@@ -3,7 +3,6 @@ function notifikasi(text,notiftype){
     $.notify(
         {
             // options
-            title: 'Notifikasi',
             message: text,
         }, 
         {
