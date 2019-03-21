@@ -76,5 +76,20 @@ class PeminjamanController extends Controller
             break;
         }
     }
+    function simpanPeminjaman(Request $request){
+        //cek dan simpan helper peminjam
+        $cek=Peminjaman::getPeminjam($request->nama);
+        if($cek==0){
+            $peminjam= new Peminjaman();
+            $peminjam->username= $request['username'];
+            $peminjam->company= $request['company'];
+            // add other fields
+            $user->save();
+        }
+        //simpan data peminjaman
+
+        //respon
+        return json_encode($request->idbarang);
+    }
 
 }

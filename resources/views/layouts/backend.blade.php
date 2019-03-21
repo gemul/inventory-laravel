@@ -130,14 +130,15 @@
         <script src="{{ cdn_asset('/adminlte/plugins/iCheck/icheck.min.js') }}" type="text/javascript"></script>
         <!-- Select2 -->
         <script src="{{ cdn_asset('/adminlte/plugins/select2/js/select2.min.js') }}" type="text/javascript"></script>
-        <!-- Moment Js-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+        <!-- Bootstrap notify-->
+        <script src="{{ cdn_asset('/adminlte/plugins/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
         <!-- END - Plugins -->
 
         <!-- AdminLTE App -->
         <script src="{{ cdn_asset('/adminlte/js/adminlte.min.js') }}"></script>
         <!-- Custom Js -->
         <script src="{{ cdn_asset('/js/backend.js?version=' . config('adminlte.version')) }}"></script>
+        <script src="{{ cdn_asset('/js/common.js') }}"></script>
 
         <script type="text/javascript">
             (function ($) {

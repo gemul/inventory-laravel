@@ -4,7 +4,7 @@ $_pageSubtitle = "Entri Peminjaman Barang";
 $_formFiles = false;
 $_listLink = 'peminjaman.index';
 $_createLink = 'peminjaman.index';
-$_storeLink = 'peminjaman.index';
+$_storeLink = 'peminjaman.store';
 ?>
 
 {{-- Extends Layout --}}
@@ -30,7 +30,7 @@ $_storeLink = 'peminjaman.index';
             <!-- Edit Form -->
             <div class="box box-info" id="wrap-edit-box">
 
-                <form class="form form-horizontal" role="form" method="POST" action="{{ $_storeLink }}" {!! $_formFiles === true ? 'enctype="multipart/form-data"' : '' !!}>
+                <form class="form form-horizontal" role="form" method="POST" id="formPeminjaman">
                     {{ csrf_field() }}
 
                     {{ redirect_back_field() }}
@@ -77,7 +77,12 @@ $_storeLink = 'peminjaman.index';
                             <div class="form-group margin-b-5 margin-t-5">
                                 <label for="tgl_pinjam" class="col-sm-4">Tanggal</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="tgl_pinjam" id="tgl_pinjam" value="" autocomplete="off" required>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="tgl_pinjam" id="tgl_pinjam" value="" autocomplete="off" required>
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-info btn-flat" type="button" onclick="sekarang()">Sekarang</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <!-- /.form-group -->
@@ -102,18 +107,15 @@ $_storeLink = 'peminjaman.index';
                     <div class="box-footer clearfix">
                         <!-- Edit Button -->
                         <div class="col-xs-6">
-                            <div class="text-center margin-b-5 margin-t-5">
+                            <div class="margin-b-5 margin-t-5" id="statusSimpanPeminjaman">
+                                ser
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="text-right margin-b-5 margin-t-5">
                                 <button class="btn btn-info">
                                     <i class="fa fa-save"></i> <span>Save</span>
                                 </button>
-                            </div>
-                        </div>
-                        <!-- /.col-xs-6 -->
-                        <div class="col-xs-6">
-                            <div class="text-center margin-b-5 margin-t-5">
-                                <a href="{{ $_listLink }}" class="btn btn-default">
-                                    <i class="fa fa-ban"></i> <span>Cancel</span>
-                                </a>
                             </div>
                         </div>
                         <!-- /.col-xs-6 -->
@@ -235,6 +237,12 @@ $_storeLink = 'peminjaman.index';
             locale: 'id',
             format:"YYYY-MM-DD HH:mm:ss"
         });
+
+        // form registration
+        $('#formPeminjaman').on('submit', function(e){
+            e.preventDefault();
+            simpanPeminjaman(this);
+        });
     });
     
     function loadTabelPeminjaman(){
@@ -296,6 +304,51 @@ $_storeLink = 'peminjaman.index';
 
         }
         
+    }
+    
+    function sekarang(){
+        $('#tgl_pinjam').val(moment().format("YYYY-MM-DD HH:mm:ss"));
+    }
+
+    // simpan peminjaman
+    function simpanPeminjaman(form){
+        var formData=$(form).serialize();
+        $.ajax({
+            type: "POST",
+            url: "{{ route('peminjaman::simpan') }}",
+            data: formData,
+            dataType: "json",
+            beforeSend:function(){
+                $('#statusSimpanPeminjaman').html("Menyimpan peminjaman");
+                // disable input
+                $('#formPeminjaman').find('input:text, input:password, select, textarea').prop("readonly",true);
+            },
+            success: function(data) {
+                if(data.status === undefined){
+                    //malformed json reply
+                    $('#statusSimpanPeminjaman').html("Terjadi kesalahan ketika menyimpan.");
+                    notifikasi("Terjadi kesalahan sistem ketika menyimpan data","danger");
+                }else if(data.status == "ok"){
+                    //ok
+                    $('#statusSimpanPeminjaman').html("Peminjaman berhasil disimpan.");
+                    notifikasi("Peminjaman berhasil disimpan.","success");
+                    // clear input
+                    $('#formPeminjaman').find('input:text, input:password, select, textarea').val('');
+                }else if(data.status == "fail"){
+                    //sum ting-wong
+                    $('#statusSimpanPeminjaman').html("Kesalahan : "+data.message);
+                    notifikasi("Kesalahan : "+data.message,"danger");
+                }
+                // enable input
+                $('#formPeminjaman').find('input:text, input:password, select, textarea').prop("readonly",false);
+            },
+            error: function() {
+                alert('error handling here');
+                notifikasi("Terjadi kesalahan koneksi","danger");
+                $('#formPeminjaman').find('input:text, input:password, select, textarea').prop("readonly",false);
+            }
+        });
+        return false;
     }
     </script>
 @endsection

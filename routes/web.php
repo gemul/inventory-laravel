@@ -120,6 +120,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::group(['middleware' => 'akses:admin'], function () {
             Route::get('/', ['as' => 'index', 'uses' => 'PeminjamanController@index']);
             Route::get('/ajax/{ajaxname}', ['as' => 'ajax', 'uses' => 'PeminjamanController@ajax']);
+            Route::post('/simpan-peminjaman', ['as' => 'simpan', 'uses' => 'PeminjamanController@simpanPeminjaman']);
             
         });
     });

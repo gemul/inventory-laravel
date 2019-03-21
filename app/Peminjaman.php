@@ -51,4 +51,23 @@ class Peminjaman extends Authenticatable
         return $data;
     }
 
+    public static function getPeminjam($nama){
+        $data=DB::table('helper_peminjam')
+            ->select('peminjam_text')
+            ->where('peminjam_text','=',$nama)
+            ->whereNull('deleted')
+            ->count();
+        return $data;
+    }
+
+    public static function addPeminjam($nama){
+        
+        $data=DB::table('helper_peminjam')
+            ->select('peminjam_text')
+            ->where('peminjam_text','=',$nama)
+            ->whereNull('deleted')
+            ->count();
+        return $data;
+    }
+
 }
