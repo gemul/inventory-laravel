@@ -80,5 +80,14 @@ class Peminjaman extends Authenticatable
             ]);
         return $helper;
     }
+    public static function pengembalian($idpeminjaman,$kembali,$kembali_catatan){
+        $helper=DB::table('helper_peminjam')
+            ->where('peminjam_text', $data->nama)
+            ->update([
+                'peminjam_bukti' => $data->bukti,
+                'peminjam_nomorbukti' => $data->nomorbukti
+            ]);
+        return $helper;
+    }
 
 }

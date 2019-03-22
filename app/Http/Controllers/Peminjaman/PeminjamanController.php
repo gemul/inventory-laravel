@@ -123,7 +123,7 @@ class PeminjamanController extends Controller
     }
 
     function simpanPengembalian(Request $request){
-        return "1";
+        return $request->kembali;
     }
 
 }

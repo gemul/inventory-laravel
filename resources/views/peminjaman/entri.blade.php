@@ -386,7 +386,7 @@ $_storeLink = 'peminjaman.store';
         $.ajax({
             'url':"{{ route('peminjaman::simpan-pengembalian') }}",
             'type':'post',
-            'data':{formData},
+            'data':formData,
             'dataType':'json',
             'beforeSend': function(){
                 $('.input-pengembalian').prop('disabled',true);
