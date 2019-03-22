@@ -247,7 +247,7 @@ $_storeLink = 'peminjaman.store';
         $.ajax({
             'url':"{{ route('peminjaman::ajax','tabel-peminjaman') }}",
             'beforeSend': function(){
-                $("#dataPeminjam").html("<tr><td colspan='5' style='text-align:center'>Tidak ada data yg ditampilkan</td></tr>");
+                $("#dataPeminjam").html("<tr><td colspan='5' style='text-align:center'><i class='fa fa-spinner fa-spin'></i> Memuat data.</td></tr>");
             },
             'success':function(res){
                 $("#dataPeminjam").html(res);
@@ -320,7 +320,7 @@ $_storeLink = 'peminjaman.store';
             data: formData,
             dataType: "json",
             beforeSend:function(){
-                $('#statusSimpanPeminjaman').html("Menyimpan peminjaman");
+                $('#statusSimpanPeminjaman').html("<i class='fa fa-spinner fa-spin'></i> Menyimpan peminjaman");
                 // disable input
                 $('#formPeminjaman').find('input:text, input:password, select, textarea').prop("readonly",true);
             },
@@ -364,7 +364,7 @@ $_storeLink = 'peminjaman.store';
             'data':{'id':id},
             'beforeSend': function(){
                 $('.btn-kembali').prop('disabled',true);
-                $('#modalPengembalian h4.modal-title').html("Memuat data...");
+                $('#modalPengembalian h4.modal-title').html("<i class='fa fa-spinner fa-spin'></i> Memuat data...");
                 $('#modalPengembalian div.modal-body').html("").hide();
                 $('#modalPengembalian').modal('show');
                 $('#button-simpan-pengembalian').hide();
@@ -390,24 +390,24 @@ $_storeLink = 'peminjaman.store';
             'dataType':'json',
             'beforeSend': function(){
                 $('.input-pengembalian').prop('disabled',true);
-                $('#button-simpan-pengembalian').html("Menyimpan...");
+                $('#button-simpan-pengembalian').html("<i class='fa fa-spinner fa-spin'></i> Menyimpan...").prop('disabled',true);
             },
             'success':function(res){
                 if(res.status===undefined){
                     //response with wrong json format
                     $('.input-pengembalian').prop('disabled',false);
                     notifikasi("Kesalahan : Kesalahan saat komunikasi data.",'danger');
-                }else if(res.status==1){
+                }else if(res.status=="ok"){
                     //response success
                     //clear and hide modal
                     $('#modalPengembalian div.modal-body').html("");
                     $('#modalPengembalian').modal('hide');
-
                     notifikasi("Pengembalian berhasil disimpan.",'success');
+                    loadTabelPeminjaman();
                 }else{
                     //response error
                     $('.input-pengembalian').prop('disabled',false);
-                    notifikasi("Kesalahan : "+res.message+".");
+                    notifikasi("Kesalahan : "+res.message+".",'danger');
                 }
             },
             'error':function(e){
@@ -415,7 +415,7 @@ $_storeLink = 'peminjaman.store';
                 notifikasi("Kesalahan : Kesalahan saat komunikasi data.",'danger');
             },
             'complete':function(){
-                $('#button-simpan-pengembalian').html("<i class='fa fa-fw fa-save'></i>Simpan");
+                $('#button-simpan-pengembalian').html("<i class='fa fa-fw fa-save'></i>Simpan").prop('disabled',false);
             }
         });
     }

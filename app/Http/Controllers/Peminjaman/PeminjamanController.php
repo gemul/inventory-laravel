@@ -123,7 +123,20 @@ class PeminjamanController extends Controller
     }
 
     function simpanPengembalian(Request $request){
-        return $request->kembali;
+        if($request->kembali==""){
+            return json_encode(['status'=>'fail','message'=>"Tanggal pengembalian harus diisi"]);
+        }
+        try{
+            $kembalikan=Peminjaman::pengembalian($request->idpeminjaman,$request->kembali,$request->kembali_catatan);
+            if($kembalikan){
+                return json_encode(['status'=>'ok','message'=>""]);
+            }else{
+                return json_encode(['status'=>'fail','message'=>"Terjadi kesalahan kueri saat menyimpan data."]);
+            }
+        }
+        catch(\Exception $e){
+            return json_encode(['status'=>'fail','message'=>"Terjadi kesalahan sistem saat menyimpan"]);
+        }
     }
 
 }
