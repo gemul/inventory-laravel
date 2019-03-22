@@ -121,6 +121,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/', ['as' => 'index', 'uses' => 'PeminjamanController@index']);
             Route::get('/ajax/{ajaxname}', ['as' => 'ajax', 'uses' => 'PeminjamanController@ajax']);
             Route::post('/simpan-peminjaman', ['as' => 'simpan', 'uses' => 'PeminjamanController@simpanPeminjaman']);
+            Route::post('/simpan-pengembalian', ['as' => 'simpan-pengembalian', 'uses' => 'PeminjamanController@simpanPengembalian']);
             
         });
     });

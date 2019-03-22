@@ -132,49 +132,45 @@ $_storeLink = 'peminjaman.store';
             <!-- Edit Form -->
             <div class="box box-info" id="wrap-edit-box">
 
-                <form class="form" role="form" method="POST" action="{{ $_storeLink }}" {!! $_formFiles === true ? 'enctype="multipart/form-data"' : '' !!}>
-                    {{ csrf_field() }}
+                <div class="box-header with-border">
+                    <h3 class="box-title">Daftar Peminjaman</h3>
 
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Daftar Peminjaman</h3>
-
-                        <div class="box-tools">
-                            <button class="btn btn-sm btn-info margin-r-5 margin-l-5" type='button' onclick='loadTabelPeminjaman()'>
-                                <i class="fa fa-refresh"></i> <span>Refresh</span>
-                            </button>
-                        </div>
+                    <div class="box-tools">
+                        <button class="btn btn-sm btn-info margin-r-5 margin-l-5" type='button' onclick='loadTabelPeminjaman()'>
+                            <i class="fa fa-refresh"></i> <span>Refresh</span>
+                        </button>
                     </div>
-                    <!-- /.box-header -->
+                </div>
+                <!-- /.box-header -->
 
-                    <div class="box-body">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Nama Peminjam</th>
-                                    <th>Barang</th>
-                                    <th>Tgl Pinjam</th>
-                                    <th>Lama</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody id="dataPeminjam">
-                                <tr>
-                                    <td colspan='5' style='text-align:center'>Tidak ada data yg ditampilkan</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- /.box-body -->
+                <div class="box-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Nama Peminjam</th>
+                                <th>Barang</th>
+                                <th>Tgl Pinjam</th>
+                                <th>Lama</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="dataPeminjam">
+                            <tr>
+                                <td colspan='5' style='text-align:center'>Tidak ada data yg ditampilkan</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
 
-                    <div class="box-footer clearfix">
-                        <!-- Edit Button -->
-                        <div class="col-xs-12">
-            
-                        </div>
-                        <!-- /.col-xs-6 -->
+                <div class="box-footer clearfix">
+                    <!-- Edit Button -->
+                    <div class="col-xs-12">
+        
                     </div>
-                    <!-- /.box-footer -->
-                </form>
+                    <!-- /.col-xs-6 -->
+                </div>
+                <!-- /.box-footer -->
             </div>
             <!-- /.box -->
             <!-- /End Edit Form -->
@@ -243,14 +239,14 @@ $_storeLink = 'peminjaman.store';
             e.preventDefault();
             simpanPeminjaman(this);
         });
-        
+
         loadTabelPeminjaman();
     });
     
     function loadTabelPeminjaman(){
         $.ajax({
             'url':"{{ route('peminjaman::ajax','tabel-peminjaman') }}",
-            'beforesend': function(){
+            'beforeSend': function(){
                 $("#dataPeminjam").html("<tr><td colspan='5' style='text-align:center'>Tidak ada data yg ditampilkan</td></tr>");
             },
             'success':function(res){
@@ -311,6 +307,9 @@ $_storeLink = 'peminjaman.store';
     function sekarang(){
         $('#tgl_pinjam').val(moment().format("YYYY-MM-DD HH:mm:ss"));
     }
+    function sekarangKembali(){
+        $('#kembali').val(moment().format("YYYY-MM-DD HH:mm:ss"));
+    }
 
     // simpan peminjaman
     function simpanPeminjaman(form){
@@ -358,7 +357,90 @@ $_storeLink = 'peminjaman.store';
         });
         return false;
     }
+    function pengembalian(id){
+        $.ajax({
+            'url':"{{ route('peminjaman::ajax','pengembalian') }}",
+            'type':'get',
+            'data':{'id':id},
+            'beforeSend': function(){
+                $('.btn-kembali').prop('disabled',true);
+                $('#modalPengembalian h4.modal-title').html("Memuat data...");
+                $('#modalPengembalian div.modal-body').html("").hide();
+                $('#modalPengembalian').modal('show');
+                $('#button-simpan-pengembalian').hide();
+            },
+            'success':function(res){
+                $('.btn-kembali').prop('disabled',false);
+                $('#modalPengembalian h4.modal-title').html("Pengembalian");
+                $('#modalPengembalian div.modal-body').html(res).slideDown(400);
+                $('#button-simpan-pengembalian').html("<i class='fa fa-fw fa-save'></i>Simpan").show();
+            },
+            'error':function(e){
+                $('.btn-kembali').prop('disabled',false);
+                notifikasi("Kesalahan : Kesalahan saat komunikasi data.");
+            }
+        });
+    }
+    function simpanPengembalian(){
+        var formData=$('#form-pengembalian').serialize();
+        $.ajax({
+            'url':"{{ route('peminjaman::simpan-pengembalian') }}",
+            'type':'post',
+            'data':{formData},
+            'dataType':'json',
+            'beforeSend': function(){
+                $('.input-pengembalian').prop('disabled',true);
+                $('#button-simpan-pengembalian').html("Menyimpan...");
+            },
+            'success':function(res){
+                if(res.status===undefined){
+                    //response with wrong json format
+                    $('.input-pengembalian').prop('disabled',false);
+                    notifikasi("Kesalahan : Kesalahan saat komunikasi data.",'danger');
+                }else if(res.status==1){
+                    //response success
+                    //clear and hide modal
+                    $('#modalPengembalian div.modal-body').html("");
+                    $('#modalPengembalian').modal('hide');
+
+                    notifikasi("Pengembalian berhasil disimpan.",'success');
+                }else{
+                    //response error
+                    $('.input-pengembalian').prop('disabled',false);
+                    notifikasi("Kesalahan : "+res.message+".");
+                }
+            },
+            'error':function(e){
+                $('.input-pengembalian').prop('disabled',false);
+                notifikasi("Kesalahan : Kesalahan saat komunikasi data.",'danger');
+            },
+            'complete':function(){
+                $('#button-simpan-pengembalian').html("<i class='fa fa-fw fa-save'></i>Simpan");
+            }
+        });
+    }
     </script>
+    <div class="modal fade" id="modalPengembalian">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Pengembalian</h4>
+            </div>
+            <div class="modal-body">
+            
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
+            <button type="button" class="btn btn-primary" id="button-simpan-pengembalian" onclick="simpanPengembalian()"><i class="fa fa-fw fa-save"></i>Simpan</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
 @endsection
 
 {{-- Footer Extras to be Included --}}

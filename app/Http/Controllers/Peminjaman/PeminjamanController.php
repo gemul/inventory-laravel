@@ -75,7 +75,12 @@ class PeminjamanController extends Controller
                 ]);
             break;
             case "pengembalian":
-                return "a";
+                $peminjaman=new Peminjaman();
+                $data = Array( 
+                    'peminjaman'=>$peminjaman->where('idpeminjaman',$request->id)->first() ,
+                    'barang'=>$peminjaman->where('idpeminjaman',$request->id)->first()->barang()->first() 
+                );
+                return view('peminjaman.ajax.form-pengembalian',$data);
             break;
         }
     }
@@ -115,6 +120,10 @@ class PeminjamanController extends Controller
 
         //respon
         return json_encode($request->idbarang);
+    }
+
+    function simpanPengembalian(Request $request){
+        return "1";
     }
 
 }
