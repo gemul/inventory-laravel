@@ -12,9 +12,9 @@
         <title>{{ config('app.name', 'Laravel') }} @hasSection('page-title') | @yield('page-title') @endif</title>
 
         <!-- Bootstrap 3.3.7 -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ cdn_asset('/css/bootstrap.min.css') }}">
         <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="{{ cdn_asset('/css/font-awesome.min.css') }}">
         <!-- Ionicons -->
         <!--<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">-->
 
@@ -24,9 +24,11 @@
         <!-- Select2 -->
         <link href="{{ cdn_asset('/adminlte/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css">
         <!-- datetimepicker -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
+        <link href="{{ cdn_asset('/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css">
         <!-- END - Plugins -->
 
+        <!-- jQuery 3 -->
+        <script src="{{ cdn_asset('/adminlte/plugins/jquery/jquery.min.js') }}"></script>
         <!-- Theme CSS -->
         <link rel="stylesheet" href="{{ cdn_asset('/adminlte/css/AdminLTE.min.css') }}">
         <!-- AdminLTE Skin. -->
@@ -43,7 +45,8 @@
         <![endif]-->
 
         <!-- Google Font -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+        {{-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic"> --}}
+        <link rel="stylesheet" href="{{ cdn_asset('/css/googlefont.css') }}">
 
         @yield('head-extras')
     </head>
@@ -92,10 +95,8 @@
         </div>
         <!-- ./wrapper -->
 
-        <!-- jQuery 3 -->
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <!-- Bootstrap 3.3.7 -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="{{ cdn_asset('/js/bootstrap.min.js') }}"></script>
         <!-- SlimScroll -->
         <script src="{{ cdn_asset('/adminlte/plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
         <!-- FastClick -->
@@ -107,9 +108,9 @@
         <!-- Select2 -->
         <script src="{{ cdn_asset('/adminlte/plugins/select2/js/select2.min.js') }}" type="text/javascript"></script>
         <!-- Moment Js-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+        <script src="{{ cdn_asset('/adminlte/plugins/moment/moment.js') }}"></script>
         <!-- DatetimePicker Js-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+        <script src="{{ cdn_asset('/js/bootstrap-datetimepicker.min.js') }}"></script>
         <!-- END - Plugins -->
 
         <!-- AdminLTE App -->
