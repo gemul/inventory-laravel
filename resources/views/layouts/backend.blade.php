@@ -55,7 +55,7 @@
         <!-- datetimepicker -->
         {{-- <link href="{{ cdn_asset('/adminlte/plugins/datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" /> --}}
         <link href="{{ cdn_asset('/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">
+        {{-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"> --}}
         @yield('head-extras')
     </head>
 
@@ -112,7 +112,7 @@
         <!-- ./wrapper -->
 
         <!-- Bootstrap 3.3.7 -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="{{ cdn_asset('/js/bootstrap.min.js') }}"></script>
         <!-- SlimScroll -->
         <script src="{{ cdn_asset('/adminlte/plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
         <!-- FastClick -->
@@ -122,7 +122,8 @@
         {{-- <script src="{{ cdn_asset('/adminlte/plugins/datepicker/bootstrap-datepicker.min.js') }}"></script> --}}
         <script src="{{ cdn_asset('/adminlte/plugins/moment/moment.js') }}"></script>
         <script src="{{ cdn_asset('/adminlte/plugins/moment/locale/id.js') }}"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+        <!-- DatetimePicker Js-->
+        <script src="{{ cdn_asset('/js/bootstrap-datetimepicker.min.js') }}"></script>
 
 
         <!-- Plugins -->
