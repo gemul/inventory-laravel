@@ -1,7 +1,7 @@
 @extends('layouts.frontend')
 
 {{-- Page Title --}}
-@section('page-title', 'Welcome')
+@section('page-title', 'Selamat Datang')
 
 {{-- Page Subtitle --}}
 @section('page-subtitle', '')
@@ -12,5 +12,5 @@
 @endsection
 
 @section('content')
-    
+    Silahkan login
 @endsection

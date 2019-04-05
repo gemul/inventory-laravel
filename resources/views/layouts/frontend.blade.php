@@ -9,7 +9,7 @@
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }} @hasSection('page-title') | @yield('page-title') @endif</title>
+        <title>{{ config('app.name', 'Inventory') }} @hasSection('page-title') | @yield('page-title') @endif</title>
 
         <!-- Bootstrap 3.3.7 -->
         <link rel="stylesheet" href="{{ cdn_asset('/css/bootstrap.min.css') }}">

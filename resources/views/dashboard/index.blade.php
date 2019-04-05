@@ -10,7 +10,7 @@
 @section('page-title', 'Dashboard')
 
 {{-- Page Subtitle --}}
-@section('page-subtitle', 'it all starts here')
+@section('page-subtitle', 'Inventory Labkom')
 
 {{-- Header Extras to be Included --}}
 @section('head-extras')
