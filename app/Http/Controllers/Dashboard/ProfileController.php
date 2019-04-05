@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Utils;
 use App\User;
+use App\History;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -48,6 +49,7 @@ class ProfileController extends Controller
 
         if ($user->update($updateValues)) {
             flash()->success('Profile updated successfully.');
+            History::addHistory('profile','Merubah profil');
         } else {
             flash()->info('Profile was not updated.');
         }

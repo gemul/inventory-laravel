@@ -4,6 +4,7 @@ namespace App\Traits\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\History;
 
 trait ResourceController
 {
@@ -87,8 +88,9 @@ trait ResourceController
         $this->resourceValidate($request, 'store');
 
         if ($record = $this->getResourceModel()::create($this->alterValuesToSave($request, $valuesToSave))) {
+            $nama=(isset($record->namabarang))?$record->namabarang:$record->nama;
             flash()->success('Element successfully inserted.');
-
+            History::addHistory('store.'.$this->getResourceAlias(),'Menambahkan data.'.$nama);
             return $this->getRedirectAfterSave($record);
         } else {
             flash()->info('Element was not inserted.');
