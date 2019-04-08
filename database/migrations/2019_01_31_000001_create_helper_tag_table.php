@@ -22,8 +22,8 @@ class CreateHelperTagTable extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('tag_text');
-            $table->boolean('deleted')->nullable()->default('0');
+            $table->string('tag_text',45);
+            $table->boolean('deleted')->nullable()->default(null);
             $table->dateTime('created')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'));
         });
     }

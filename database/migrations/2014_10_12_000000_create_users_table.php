@@ -16,14 +16,14 @@ class CreateUsersTable extends Migration
         Schema::create('user', function (Blueprint $table) {
             $table->increments('iduser');
             $table->string('nama');
-            $table->string('username')->unique();
-            $table->string('password');
+            $table->string('username',45)->unique();
+            $table->string('password',128);
             $table->text('hak');
-            $table->tinyInteger('aktif');
-            $table->dateTime('deleted');
-            $table->dateTime('created');
-            $table->dateTime('updated');
-            $table->tinyInteger('updated');
+            $table->boolean('aktif');
+            $table->dateTime('deleted')->nullable()->default(null);
+            $table->dateTime('created')->default(DB::raw('CURRENT_TIMESTAMP'));;
+            $table->dateTime('updated')->nullable()->default(DB::raw('NULL ON UPDATE CURRENT_TIMESTAMP'));
+            $table->boolean('is_admin');
             $table->rememberToken();
         });
     }
@@ -35,6 +35,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('user');
     }
 }

@@ -22,8 +22,8 @@ class CreateHelperBuktiTable extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('bukti_text');
-            $table->boolean('deleted')->nullable()->default('0');
+            $table->string('bukti_text',45);
+            $table->dateTime('deleted')->nullable()->default(null);
             $table->dateTime('created')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'));
         });
     }
