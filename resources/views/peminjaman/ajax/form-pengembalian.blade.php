@@ -18,7 +18,7 @@ if($hari==0 && $jam==0){
         {{ csrf_field() }}
         <input type='hidden' name='idpeminjaman' id='idpeminjaman' value="{{ $peminjaman->idpeminjaman }}" >
         <div class="form-group margin-b-5 margin-t-5 ">
-            <label for="idbarang" class="col-sm-4">Barang</label>
+            <label for="kembali" class="col-sm-4">Tanggal Kembali</label>
             <div class="col-sm-8">
                 <div class="input-group">
                     <input type="text" class="form-control input-pengembalian" name="kembali" id="kembali" value="" autocomplete="off" required>
