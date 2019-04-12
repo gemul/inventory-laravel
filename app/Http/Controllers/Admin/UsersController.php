@@ -35,7 +35,7 @@ class UsersController extends Controller
         'index'=>'admin',
         'add'=>'user-entry',
         'edit'=>'user-entry',
-        'delet'=>'user-entry',
+        'delete'=>'user-entry',
     );
 
     /**
