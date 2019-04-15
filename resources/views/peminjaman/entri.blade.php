@@ -441,6 +441,14 @@ $_storeLink = 'peminjaman.store';
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
+    <style>
+        .bootstrap-datetimepicker-widget .picker-switch table {
+            width: 100%;
+        }
+        .bootstrap-datetimepicker-widget .picker-switch table > tbody > tr > td {
+            text-align:center;
+        }
+    </style>
 @endsection
 
 {{-- Footer Extras to be Included --}}
