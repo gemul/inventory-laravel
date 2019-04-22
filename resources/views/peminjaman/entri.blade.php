@@ -23,9 +23,8 @@ $_storeLink = 'peminjaman.store';
 
 @section('content')
 
-
     <div class="row">
-        <div class="col-xs-6">
+        <div class="col-md-6">
 
             <!-- Edit Form -->
             <div class="box box-info" id="wrap-edit-box">
@@ -106,19 +105,19 @@ $_storeLink = 'peminjaman.store';
 
                     <div class="box-footer clearfix">
                         <!-- Edit Button -->
-                        <div class="col-xs-6">
+                        <div class="col-md-6">
                             <div class="margin-b-5 margin-t-5" id="statusSimpanPeminjaman">
                                 
                             </div>
                         </div>
-                        <div class="col-xs-6">
+                        <div class="col-md-6">
                             <div class="text-right margin-b-5 margin-t-5">
                                 <button class="btn btn-info">
                                     <i class="fa fa-save"></i> <span>Save</span>
                                 </button>
                             </div>
                         </div>
-                        <!-- /.col-xs-6 -->
+                        <!-- /.col-md-6 -->
                     </div>
                     <!-- /.box-footer -->
                 </form>
@@ -127,7 +126,7 @@ $_storeLink = 'peminjaman.store';
             <!-- /End Edit Form -->
         </div>
 
-        <div class="col-xs-6">
+        <div class="col-md-6">
 
             <!-- Edit Form -->
             <div class="box box-info" id="wrap-edit-box">
@@ -143,8 +142,8 @@ $_storeLink = 'peminjaman.store';
                 </div>
                 <!-- /.box-header -->
 
-                <div class="box-body">
-                    <table class="table table-hover">
+                <div class="box-body table-responsive">
+                    <table class="table table-hover ">
                         <thead>
                             <tr>
                                 <th>Nama Peminjam</th>
@@ -165,10 +164,10 @@ $_storeLink = 'peminjaman.store';
 
                 <div class="box-footer clearfix">
                     <!-- Edit Button -->
-                    <div class="col-xs-12">
+                    <div class="col-md-12">
         
                     </div>
-                    <!-- /.col-xs-6 -->
+                    <!-- /.col-md-6 -->
                 </div>
                 <!-- /.box-footer -->
             </div>
