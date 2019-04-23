@@ -125,5 +125,15 @@ Route::group(['middleware' => 'auth'], function () {
             
         });
     });
+    Route::group(['prefix' => 'laporan', 'namespace' => 'Laporan', 'as'=>'laporan::'], function () {
+        /**
+         * Admin Access
+         */
+        Route::group(['middleware' => 'akses:admin'], function () {
+            Route::get('/', ['as' => 'index', 'uses' => 'LaporanStokController@index']);
+            Route::get('/stok', ['as' => 'ajax', 'uses' => 'LaporanStokController@stok']);
+            
+        });
+    });
 
 });
