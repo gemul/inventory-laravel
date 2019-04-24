@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\Models\FillableFields;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\DB;
 
 class Barang extends Authenticatable
 {
@@ -44,6 +45,23 @@ class Barang extends Authenticatable
         return $query->join('kategori','barang.idkategori','=','kategori.idkategori')
                     ->where('namabarang','like',"%".$keyword."%")
                     ->orWhere('nama','like',"%".$keyword."%");
+    }
+
+    public static function stok(){
+        $result=Array();
+        $query=DB::table('barang')
+            ->select('barang.idbarang','nama','namabarang')
+            ->join('kategori', 'barang.idkategori','=','kategori.idkategori')
+            ->get();
+        foreach($query as $barang){
+            $stok= DB::table('transaksi')
+                ->selectRaw("SUM(CASE WHEN jenis = 'masuk' THEN jumlah ELSE 0 END) AS total_masuk, " .
+                    "SUM(CASE WHEN jenis = 'keluar' THEN jumlah ELSE 0 END) AS total_keluar")
+                ->where('idbarang','=',$barang->idbarang)
+                ->first();
+            $result[]=['idbarang'=>$barang->idbarang,'kategori'=>$barang->nama,'nama'=>$barang->namabarang,'stok'=>($stok->total_masuk - $stok->total_keluar)];
+        }
+        return $result;
     }
 
 }

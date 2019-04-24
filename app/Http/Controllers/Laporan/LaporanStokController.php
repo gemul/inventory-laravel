@@ -5,6 +5,7 @@ use App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Barang;
 
 class LaporanStokController extends Controller
 {
@@ -16,9 +17,10 @@ class LaporanStokController extends Controller
     }
 
     function stok(Request $request){
+        $data=Barang::stok();
         $pdf = App::make('dompdf.wrapper');
         $pdf->setPaper( 'a4', 'portrait');
-        $pdf->loadHTML( view('laporan.stok') );
+        $pdf->loadHTML( view('laporan.stok', ['data' => $data]) );
         return $pdf->stream( 'Laporan Stok (SILabkom Cetak_'.date('Y-m-d_H:i:s').').pdf' , array('Attachment' => 0) );
     }
 
