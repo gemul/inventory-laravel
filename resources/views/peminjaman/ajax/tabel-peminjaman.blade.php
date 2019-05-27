@@ -16,7 +16,7 @@ if($hari==0 && $jam==0){
 ?>
                                 <tr>
                                     <td>{{ $item->nama }}</td>
-                                    <td>{{ $item->barang->namabarang }}</td>
+                                    <td>{{ $item->barang->namabarang }} ({{ $item->label }})</td>
                                     <td><div data-toggle="tooltip" title="{{$item->tgl_pinjam}}">{{ substr($item->tgl_pinjam,0,10) }}</div> </td>
                                     <td>{{ $lama }}</td>
                                     <td><button type="button" onclick="pengembalian({{ $item->idpeminjaman }})" class="btn btn-success btn-xs btn-kembali">Kembali</button></td>
