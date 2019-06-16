@@ -22,7 +22,7 @@ class CreateHelperPeminjamTable extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('peminjam_text');
+            $table->string('peminjam_text', 256)->nullable()->default(null);
             $table->string('peminjam_bukti', 45)->nullable()->default(null);
             $table->string('peminjam_nomorbukti', 45)->nullable()->default(null);
             $table->dateTime('deleted')->nullable()->default(null);

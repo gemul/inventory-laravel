@@ -22,7 +22,7 @@ class CreateHelperTagTable extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('tag_text');
+            $table->string('tag_text', 64)->nullable()->default(null);
             $table->tinyInteger('deleted')->nullable()->default('0');
             $table->dateTime('created')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'));
         });
