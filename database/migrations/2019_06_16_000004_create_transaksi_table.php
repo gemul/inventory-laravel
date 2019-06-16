@@ -23,17 +23,16 @@ class CreateTransaksiTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('idtransaksi');
-            $table->integer('iduser')->nullable();
-            $table->integer('idbarang')->nullable();
-            $table->dateTime('tanggal')->nullable();
-            $table->string('jenis', 8)->nullable()->comment('keluar = barang keluar, masuk = barang masuk');
-            $table->float('jumlah')->nullable();
-            $table->string('lokasi')->nullable();
-            $table->text('catatan')->nullable();
-            $table->boolean('deleted')->nullable()->default('0');
+            $table->integer('iduser')->nullable()->default(null);
+            $table->integer('idbarang')->nullable()->default(null);
+            $table->dateTime('tanggal')->nullable()->default(null);
+            $table->string('jenis', 8)->nullable()->default(null)->comment('keluar = barang keluar, masuk = barang masuk');
+            $table->double('jumlah')->nullable()->default(null);
+            $table->string('lokasi', 191)->nullable()->default(null);
+            $table->text('catatan')->nullable()->default(null);
+            $table->dateTime('deleted')->nullable()->default(null);
             $table->dateTime('created')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->dateTime('updated')->nullable()->default(DB::raw('NULL ON UPDATE CURRENT_TIMESTAMP'));
-
+            $table->dateTime('updated')->nullable()->default(null);
         });
     }
 

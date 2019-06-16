@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHelperBuktiTable extends Migration
+class CreatePengembalianTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'helper_bukti';
+    public $tableName = 'pengembalian';
 
     /**
      * Run the migrations.
-     * @table helper_bukti
+     * @table pengembalian
      *
      * @return void
      */
@@ -22,9 +22,14 @@ class CreateHelperBuktiTable extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->string('bukti_text',45);
-            $table->dateTime('deleted')->nullable()->default(null);
+            $table->increments('idpengembalian');
+            $table->integer('idpeminjaman')->nullable()->default(null);
+            $table->integer('iduser')->nullable()->default(null);
+            $table->dateTime('tgl_kembali')->nullable()->default(null);
+            $table->string('sendiri', 128)->nullable()->default(null)->comment('sendiri, lain, custom');
+            $table->tinyInteger('deleted')->nullable()->default('0');
             $table->dateTime('created')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->dateTime('updated')->nullable()->default(null);
         });
     }
 

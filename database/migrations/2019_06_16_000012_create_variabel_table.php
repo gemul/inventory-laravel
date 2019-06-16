@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHelperTagTable extends Migration
+class CreateVariabelTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'helper_tag';
+    public $tableName = 'variabel';
 
     /**
      * Run the migrations.
-     * @table helper_tag
+     * @table variabel
      *
      * @return void
      */
@@ -22,9 +22,9 @@ class CreateHelperTagTable extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->string('tag_text',45);
-            $table->boolean('deleted')->nullable()->default(null);
-            $table->dateTime('created')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->increments('nama');
+            $table->string('nilai', 128)->nullable()->default(null);
+            $table->dateTime('updated')->nullable()->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
     }
 

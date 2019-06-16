@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLabelTable extends Migration
+class CreateHelperBuktiTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'label';
+    public $tableName = 'helper_bukti';
 
     /**
      * Run the migrations.
-     * @table label
+     * @table helper_bukti
      *
      * @return void
      */
@@ -22,8 +22,8 @@ class CreateLabelTable extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('label_text');
-            $table->boolean('deleted')->nullable()->default('0');
+            $table->increments('bukti_text');
+            $table->dateTime('deleted')->nullable()->default(null);
             $table->dateTime('created')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'));
         });
     }

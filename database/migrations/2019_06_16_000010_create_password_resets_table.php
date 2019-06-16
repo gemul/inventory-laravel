@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVariabelTable extends Migration
+class CreatePasswordResetsTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'variabel';
+    public $tableName = 'password_resets';
 
     /**
      * Run the migrations.
-     * @table variabel
+     * @table password_resets
      *
      * @return void
      */
@@ -22,9 +22,11 @@ class CreateVariabelTable extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('nama');
-            $table->string('nilai', 128)->nullable();
-            $table->dateTime('updated')->nullable()->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+            $table->string('email', 191);
+            $table->string('token', 191);
+            $table->timestamp('created_at')->nullable()->default(null);
+
+            $table->index(["email"], 'password_resets_email_index');
         });
     }
 

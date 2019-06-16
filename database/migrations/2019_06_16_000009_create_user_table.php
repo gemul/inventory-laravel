@@ -23,15 +23,15 @@ class CreateUserTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('iduser');
-            $table->string('nama')->nullable();
-            $table->string('username', 45)->nullable();
-            $table->string('password', 64)->nullable();
+            $table->string('nama', 191)->nullable()->default(null);
+            $table->string('username', 45)->nullable()->default(null);
+            $table->string('password', 64)->nullable()->default(null);
             $table->rememberToken();
-            $table->text('hak')->nullable()->comment('json hak');
-            $table->boolean('aktif')->nullable()->default('1');
-            $table->boolean('deleted')->nullable()->default('0');
+            $table->text('hak')->nullable()->default(null)->comment('json hak');
+            $table->tinyInteger('aktif')->nullable()->default('1');
+            $table->tinyInteger('deleted')->nullable()->default('0');
             $table->dateTime('created')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->dateTime('updated')->nullable()->default(DB::raw('NULL ON UPDATE CURRENT_TIMESTAMP'));
+            $table->dateTime('updated')->nullable()->default(null);
             $table->tinyInteger('is_admin')->nullable()->default('0');
         });
     }

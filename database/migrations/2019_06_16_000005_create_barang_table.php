@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHelperPeminjamTable extends Migration
+class CreateBarangTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'helper_peminjam';
+    public $tableName = 'barang';
 
     /**
      * Run the migrations.
-     * @table helper_peminjam
+     * @table barang
      *
      * @return void
      */
@@ -22,11 +22,15 @@ class CreateHelperPeminjamTable extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->string('peminjam_text',45);
-            $table->string('peminjam_bukti',45);
-            $table->string('peminjam_nomorbukti', 45)->nullable();
-            $table->boolean('deleted')->nullable()->default(null);
+            $table->increments('idbarang');
+            $table->integer('idkategori');
+            $table->string('namabarang', 191)->nullable()->default(null);
+            $table->string('kode', 16)->nullable()->default(null);
+            $table->text('spesifikasi')->nullable()->default(null);
+            $table->text('catatan')->nullable()->default(null);
+            $table->dateTime('deleted')->nullable()->default(null);
             $table->dateTime('created')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->dateTime('updated')->nullable()->default(null);
         });
     }
 

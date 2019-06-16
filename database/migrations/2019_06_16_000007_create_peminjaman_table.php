@@ -23,19 +23,19 @@ class CreatePeminjamanTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('idpeminjaman');
-            $table->integer('iduser')->nullable();
-            $table->integer('idbarang')->nullable();
-            $table->string('nama')->nullable();
-            $table->dateTime('tgl_pinjam')->nullable();
-            $table->string('bukti', 45)->nullable();
-            $table->string('nomorbukti', 45)->nullable();
-            $table->string('label', 45)->nullable();
-            $table->text('catatan')->nullable();
-            $table->boolean('kembali')->nullable()->default('0');
-            $table->boolean('deleted')->nullable()->default('0');
+            $table->integer('iduser')->nullable()->default(null);
+            $table->integer('idbarang')->nullable()->default(null);
+            $table->string('nama', 191)->nullable()->default(null);
+            $table->dateTime('tgl_pinjam')->nullable()->default(null);
+            $table->string('bukti', 45)->nullable()->default(null);
+            $table->string('nomorbukti', 45)->nullable()->default(null);
+            $table->string('label', 45)->nullable()->default(null);
+            $table->text('catatan')->nullable()->default(null);
+            $table->dateTime('kembali')->nullable()->default(null);
+            $table->text('kembali_catatan')->nullable()->default(null);
+            $table->dateTime('deleted')->nullable()->default(null);
             $table->dateTime('created')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->dateTime('updated')->nullable()->default(DB::raw('NULL ON UPDATE CURRENT_TIMESTAMP'));
-
+            $table->dateTime('updated')->nullable()->default(null);
         });
     }
 
