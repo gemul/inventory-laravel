@@ -14,8 +14,7 @@ This is not a final product. Just my target practice.
 - Run __php artisan key:generate__
 - Run __php artisan migrate --seed__
 - Login with:
-    - Admin: __admin@admin.com__ - __secret__
-    - Member: __member@example.com__ - __secret__
+    - Admin: __admin__ - __secret__
 
 ## Compatibility Chart
 
